@@ -17,6 +17,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "RTtask"
+rootProject.name = "Examate"
 include(":app")
  

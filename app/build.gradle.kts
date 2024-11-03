@@ -7,11 +7,11 @@ plugins {
 }
 
 android {
-    namespace = "com.omarlkhalil.rt_task"
+    namespace = "com.omarlkhalil.examate"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.omarlkhalil.rt_task"
+        applicationId = "com.omarlkhalil.examate"
         minSdk = 24
         targetSdk = 34
         versionCode = 1
@@ -32,6 +32,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            signingConfig = signingConfigs.getByName("debug")
         }
     }
     compileOptions {
