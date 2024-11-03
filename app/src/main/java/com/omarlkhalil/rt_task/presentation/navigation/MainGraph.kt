@@ -7,6 +7,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.omarlkhalil.rt_task.presentation.screens.connect.ConnectScreen
 import com.omarlkhalil.rt_task.presentation.screens.home.HomeScreen
 
 
@@ -30,7 +31,7 @@ private fun NavGraphBuilder.homeScreen(navController: NavController) {
 
 private fun NavGraphBuilder.connectScreen(navController: NavController) {
     composable(route = Roots.Connect.route) {
-        Text(text = "Connect")
+        ConnectScreen()
     }
 }
 

@@ -44,6 +44,10 @@ val rtTypography = RTTypography(
         fontFamily = FontFamily(Font(R.font.medium)),
         fontSize = 24.sp
     ),
+    medium18 = TextStyle(
+        fontFamily = FontFamily(Font(R.font.medium)),
+        fontSize = 18.sp
+    ),
 )
 
 
@@ -56,5 +60,6 @@ data class RTTypography(
     val medium10: TextStyle,
     val medium12: TextStyle,
     val medium14: TextStyle,
+    val medium18: TextStyle,
     val medium24: TextStyle,
 )

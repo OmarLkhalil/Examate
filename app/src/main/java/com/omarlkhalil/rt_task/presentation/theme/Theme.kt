@@ -42,7 +42,7 @@ object RTTheme {
         @ReadOnlyComposable
         get() = localTypography.current
 
-    val shapes: Shapes
+    val shapes: RTShapes
         @Composable
         @ReadOnlyComposable
         get() = localShapes.current
