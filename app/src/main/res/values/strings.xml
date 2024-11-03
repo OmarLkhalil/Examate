@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">RTtask</string>
+    <string name="home">Home</string>
+    <string name="tools">Tools</string>
+    <string name="connect">Connect</string>
+    <string name="profile">Profile</string>
+    <string name="questions">Questions</string>
+    <string name="empty"></string>
+    <string name="hi">"Hi "</string>
+    <string name="study_plan">Study Plan</string>
+</resources>
