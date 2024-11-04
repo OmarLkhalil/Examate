@@ -1,16 +1,20 @@
 package com.omarlkhalil.examate.presentation.screens.connect
 
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.DateRange
 import androidx.compose.material.icons.outlined.LocationOn
 import androidx.compose.material.icons.outlined.Person
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
 import androidx.compose.material3.TabRowDefaults
@@ -21,8 +25,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import com.omarlkhalil.examate.R
 import com.omarlkhalil.examate.presentation.components.ConnectCardItem
 import com.omarlkhalil.examate.presentation.components.ConnectItemModel
@@ -33,7 +40,7 @@ import ir.kaaveh.sdpcompose.sdp
 
 @Composable
 fun ConnectScreen() {
-    Box(modifier = Modifier.fillMaxSize()) {
+    Column(modifier = Modifier.fillMaxSize()) {
         Tabs()
     }
 }
@@ -78,6 +85,28 @@ fun Suggestions() {
         verticalArrangement = androidx.compose.foundation.layout.Arrangement.spacedBy(10.sdp),
         contentPadding = PaddingValues(10.sdp)
     ) {
+        item{
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+            ){
+                Text(
+                    text = "Suggested Study Partners",
+                    textAlign = TextAlign.Start,
+                    modifier = Modifier.weight(1f),
+                    style = RTTheme.typography.bold18,
+                    color = RTTheme.color.primary600
+                )
+                IconButton(onClick = {  }) {
+                    Icon(
+                        painter = painterResource(R.drawable.ic_filters),
+                        contentDescription = "Home",
+                        tint = RTTheme.color.primary400,
+                        modifier = Modifier
+                            .size(24.sdp)
+                    )
+                }
+            }
+        }
         items(connectionsList) {
             ConnectCardItem(it)
         }
