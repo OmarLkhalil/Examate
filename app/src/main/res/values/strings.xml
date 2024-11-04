@@ -10,4 +10,6 @@
     <string name="study_plan">Study Plan</string>
     <string name="suggestions">Suggestions</string>
     <string name="chat">Chat</string>
+    <string name="oral">Oral</string>
+    <string name="writing">Writing</string>
 </resources>

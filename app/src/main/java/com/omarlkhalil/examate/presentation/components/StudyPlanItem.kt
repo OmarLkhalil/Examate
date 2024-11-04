@@ -32,7 +32,7 @@ import com.omarlkhalil.examate.presentation.theme.RTTheme
 import ir.kaaveh.sdpcompose.sdp
 
 @Composable
-fun ProgressStepItem(
+private fun ProgressStepItem(
     stepNumber: Int,
     title: String,
     progress: Float = 0f,
@@ -120,7 +120,7 @@ fun ProgressStepItem(
 }
 
 @Composable
-fun ProgressSteps() {
+internal fun ProgressSteps() {
     val listItem = listOf(
         ProgressStepItemData(1, "Unite 1: what is examate", false, 1f, false),
         ProgressStepItemData(2, "Unite 2: what is TCF", false, 1f, false),

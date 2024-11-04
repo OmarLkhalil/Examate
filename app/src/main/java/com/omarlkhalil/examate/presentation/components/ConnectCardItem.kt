@@ -33,11 +33,12 @@ import com.omarlkhalil.examate.presentation.theme.RTTheme
 import ir.kaaveh.sdpcompose.sdp
 
 @Composable
-fun ConnectCardItem(
+internal fun ConnectCardItem(
     itemModel: ConnectItemModel
 ) {
     ElevatedCard(
         colors = CardDefaults.cardColors(containerColor = RTTheme.color.white),
+        shape = RTTheme.shapes.large,
         elevation = CardDefaults.elevatedCardElevation(defaultElevation = 2.sdp),
     ) {
         Column(
@@ -62,6 +63,7 @@ fun ConnectCardItem(
                 )
             }
             Row(
+                modifier = Modifier.padding(horizontal = 7.sdp),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(10.sdp)
             ) {
@@ -76,7 +78,7 @@ fun ConnectCardItem(
 
 
 @Composable
-fun ProfilePicture(
+private fun ProfilePicture(
     modifier: Modifier = Modifier,
     image: Any? = null,
     size: Int,
@@ -101,7 +103,7 @@ fun ProfilePicture(
 }
 
 @Composable
-fun BodyTitleItem(
+private fun BodyTitleItem(
     name: String,
     target: String,
     items: List<String>,
@@ -127,17 +129,14 @@ fun BodyTitleItem(
                     .padding(2.sdp)
                     .background(RTTheme.color.primary600),
                 contentAlignment = Center
-            )
-            {
+            ) {
                 Text(
                     text = "Targeting: $target",
                     style = RTTheme.typography.medium14,
                     color = RTTheme.color.white,
-
-                    )
+                )
             }
         }
-
         Text(
             text = "Last seen online: Yesterday",
             textAlign = TextAlign.Start,
@@ -169,7 +168,7 @@ fun BodyTitleItem(
 }
 
 @Composable
-fun ConnectTextItem(icon: ImageVector, title: String) {
+private fun ConnectTextItem(icon: ImageVector, title: String) {
     Row(
         modifier = Modifier
             .padding(3.sdp)
@@ -180,7 +179,6 @@ fun ConnectTextItem(icon: ImageVector, title: String) {
         Icon(imageVector = icon, contentDescription = title, modifier = Modifier.size(16.sdp))
         Text(text = title, style = RTTheme.typography.medium12, color = RTTheme.color.primary200)
     }
-
 }
 
 data class ConnectItemModel(

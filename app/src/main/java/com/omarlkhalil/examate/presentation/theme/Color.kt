@@ -34,8 +34,8 @@ val rtThemeColors = RTColor(
     secondary200 = Color(0xFFE5E7EB), // Light gray
 
     surface = Color(0xFFFFFFFF), // White
-    background = Color(0xFFFDFEFF), // Off-white
+    background = Color(0xFFF3F4F6), // Off-white
     contentPrimary = Color(0xFF000000), // Black
-    contentSecondary = Color(0xFF6B7280), // Medium gray
+    contentSecondary = Color(0xFF4B5563), // Medium gray
     accent = Color(0xFFF9FAFB) // Very light gray
 )

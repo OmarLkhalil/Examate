@@ -26,7 +26,7 @@ import ir.kaaveh.sdpcompose.sdp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BaseTopBar(navController: NavController) {
+internal fun BaseTopBar(navController: NavController) {
 
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route

@@ -1,7 +1,12 @@
 package com.omarlkhalil.examate.presentation.navigation
 
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
@@ -9,6 +14,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.omarlkhalil.examate.presentation.screens.connect.ConnectScreen
 import com.omarlkhalil.examate.presentation.screens.home.HomeScreen
+import com.omarlkhalil.examate.presentation.screens.questions.QuestionsScreen
 
 
 @Composable
@@ -37,18 +43,22 @@ private fun NavGraphBuilder.connectScreen(navController: NavController) {
 
 private fun NavGraphBuilder.questionsScreen(navController: NavController) {
     composable(route = Roots.Questions.route) {
-        Text(text = "Questions")
+        QuestionsScreen()
     }
 }
 
 private fun NavGraphBuilder.profileScreen(navController: NavController) {
     composable(route = Roots.Profile.route) {
-        Text(text = "Profile")
+        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+            Text(text = "Profile")
+        }
     }
 }
 
 private fun NavGraphBuilder.toolsScreen(navController: NavController) {
     composable(route = Roots.Tools.route) {
-        Text(text = "Tools")
+        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+            Text(text = "Tools")
+        }
     }
 }

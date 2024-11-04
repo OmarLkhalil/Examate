@@ -84,10 +84,10 @@ fun Suggestions() {
         verticalArrangement = androidx.compose.foundation.layout.Arrangement.spacedBy(10.sdp),
         contentPadding = PaddingValues(10.sdp)
     ) {
-        item{
+        item {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
-            ){
+            ) {
                 Text(
                     text = "Suggested Study Partners",
                     textAlign = TextAlign.Start,
@@ -95,7 +95,7 @@ fun Suggestions() {
                     style = RTTheme.typography.bold18,
                     color = RTTheme.color.primary600
                 )
-                IconButton(onClick = {  }) {
+                IconButton(onClick = { }) {
                     Icon(
                         painter = painterResource(R.drawable.ic_filters),
                         contentDescription = "Home",
@@ -124,7 +124,6 @@ fun Chat() {
         }
     }
 }
-
 
 
 val connectionsList = listOf(
