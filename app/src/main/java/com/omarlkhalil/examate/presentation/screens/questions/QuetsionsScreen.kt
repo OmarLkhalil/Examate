@@ -1,5 +1,7 @@
 package com.omarlkhalil.examate.presentation.screens.questions
 
+import android.os.Handler
+import android.os.Looper
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.animateDpAsState
@@ -27,51 +29,68 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
 import androidx.compose.material3.TabRowDefaults
 import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Black
 import androidx.compose.ui.graphics.Color.Companion.White
+import androidx.compose.ui.layout.LayoutCoordinates
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.omarlkhalil.examate.R
 import com.omarlkhalil.examate.presentation.components.OralQuestionItemModel
 import com.omarlkhalil.examate.presentation.components.OralQuestionsCard
+import com.omarlkhalil.examate.presentation.components.ToolTipHintItem
+import com.omarlkhalil.examate.presentation.components.ToolTipItem
 import com.omarlkhalil.examate.presentation.components.WritingQuestionModel
 import com.omarlkhalil.examate.presentation.components.WritingQuestionsCard
+import com.omarlkhalil.examate.presentation.screens.SharedViewModel
 import com.omarlkhalil.examate.presentation.theme.RTTheme
 import ir.kaaveh.sdpcompose.sdp
 
 
 @Composable
-fun QuestionsScreen() {
+fun QuestionsScreen(
+    isFilterHintVisible: MutableState<Boolean> = mutableStateOf(false),
+    isToolsHintVisible: MutableState<Boolean> = mutableStateOf(false),
+    viewModel: SharedViewModel = hiltViewModel()
+) {
+    val visibleHintCoordinates = remember { mutableStateOf(viewModel.visibleHintCoordinates.value) }
     Column(modifier = Modifier.fillMaxSize()) {
-        QuestionsTabs()
+        QuestionsTabs(
+            isFilterHintVisible,
+            isToolsHintVisible,
+            visibleHintCoordinates,
+            viewModel
+        )
     }
 }
 
-
 @Composable
-fun QuestionsTabs() {
-    var tabIndex by remember { mutableIntStateOf(0) }
-
+fun QuestionsTabs(
+    isFilterHintVisible: MutableState<Boolean>,
+    isToolsHintVisible: MutableState<Boolean>,
+    visibleHintCoordinates: MutableState<LayoutCoordinates?>,
+    viewModel: SharedViewModel
+) {
+    val tabIndex by viewModel.questionsTabsIndex.collectAsState()
     val tabs = listOf(stringResource(R.string.writing), stringResource(R.string.oral))
 
     Column(modifier = Modifier.fillMaxWidth()) {
@@ -116,43 +135,105 @@ fun QuestionsTabs() {
                     }
                 },
                     selected = tabIndex == index,
-                    onClick = { tabIndex = index }
+                    onClick = { viewModel.setTabsIndex(index) }
                 )
             }
         }
         when (tabIndex) {
             0 -> Writing()
-            1 -> Oral()
+            1 -> Oral(
+                isFilterHintVisible,
+                isToolsHintVisible,
+                visibleHintCoordinates,
+                viewModel
+            )
         }
     }
 }
 
-
 @Composable
-private fun Oral() {
+fun Oral(
+    isFilterHintVisible: MutableState<Boolean>,
+    isToolsHintVisible: MutableState<Boolean>,
+    visibleHintCoordinates: MutableState<LayoutCoordinates?>,
+    viewModel: SharedViewModel
+) {
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.spacedBy(10.sdp),
         contentPadding = PaddingValues(10.sdp)
     ) {
         item {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                Text(
-                    text = "Suggested Study Partners",
-                    textAlign = TextAlign.Start,
-                    modifier = Modifier.weight(1f),
-                    style = RTTheme.typography.bold18,
-                    color = RTTheme.color.primary600
+            if (isFilterHintVisible.value) {
+                ToolTipHintItem(
+                    iconRes = R.drawable.ic_nav_home,
+                    textRes = R.string.home,
+                    isHintVisible = isFilterHintVisible,
+                    visibleHintCoordinates = visibleHintCoordinates,
+                    onClick = {
+                        viewModel.updateSelectedIndex(2)
+                    },
+                    customContent = {
+                        Row(
+                            modifier = Modifier
+                                .clip(RTTheme.shapes.small)
+                                .width(100.sdp)
+                                .height(40.sdp)
+                                .background(RTTheme.color.secondary400),
+                            verticalAlignment = CenterVertically,
+                            horizontalArrangement = Arrangement.Center
+                        ) {
+                            Text(
+                                text = "Filter",
+                                textAlign = TextAlign.Start,
+                                style = RTTheme.typography.bold16,
+                                color = RTTheme.color.primary600
+                            )
+                            Icon(
+                                painter = painterResource(R.drawable.ic_filters),
+                                contentDescription = "Filter",
+                                tint = RTTheme.color.primary400,
+                                modifier = Modifier.size(20.sdp)
+                            )
+                        }
+                    },
+                    customHintContent = {
+                        ToolTipItem(
+                            hintText = stringResource(R.string.hint),
+                            isHintVisible = isFilterHintVisible,
+                            onNextClick = {
+                                isFilterHintVisible.value = !isFilterHintVisible.value
+                                viewModel.updateSelectedIndex(3)
+                                Handler(Looper.getMainLooper()).postDelayed({
+                                    isToolsHintVisible.value = !isToolsHintVisible.value
+                                }, 1000)
+                            },
+                            icon = R.drawable.ic_filters
+                        )
+                    }
                 )
-                IconButton(onClick = { }) {
+            } else {
+                // Default display without the hint
+                Row(
+                    modifier = Modifier
+                        .clip(RTTheme.shapes.small)
+                        .width(100.sdp)
+                        .height(40.sdp)
+                        .background(RTTheme.color.secondary400),
+                    verticalAlignment = CenterVertically,
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    Text(
+                        text = "Filter",
+                        textAlign = TextAlign.Start,
+                        style = RTTheme.typography.bold16,
+                        color = RTTheme.color.primary600
+                    )
                     Icon(
                         painter = painterResource(R.drawable.ic_filters),
-                        contentDescription = "Home",
+                        contentDescription = "Filter",
                         tint = RTTheme.color.primary400,
-                        modifier = Modifier
-                            .size(24.sdp)
+                        modifier = Modifier.size(20.sdp)
                     )
                 }
             }
@@ -162,7 +243,6 @@ private fun Oral() {
         }
     }
 }
-
 
 @Composable
 private fun Writing() {
@@ -178,6 +258,7 @@ private fun Writing() {
 
 @Composable
 fun CustomTabSample() {
+
     val (selected, setSelected) = remember {
         mutableIntStateOf(0)
     }
@@ -185,6 +266,7 @@ fun CustomTabSample() {
     CustomTab(
         items = listOf("Task 1", "Task 2"),
         selectedItemIndex = selected,
+        modifier = Modifier.padding(horizontal = 10.sdp),
         onClick = setSelected,
     )
 

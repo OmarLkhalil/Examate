@@ -12,4 +12,7 @@
     <string name="chat">Chat</string>
     <string name="oral">Oral</string>
     <string name="writing">Writing</string>
+    <string name="close">Close</string>
+    <string name="next">Next</string>
+    <string name="hint">Cliquez ici pour voir par catégories avec progression</string>
 </resources>

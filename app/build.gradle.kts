@@ -83,7 +83,7 @@ dependencies {
     // nav-compose
     implementation(libs.nav.compose)
     // hilt-compose
-    // implementation(libs.hilt.compose)
+     implementation(libs.hilt.compose)
     // compose-livedata
     implementation(libs.compose.livedata)
 
@@ -91,5 +91,7 @@ dependencies {
     // SDP && SSP
     implementation (libs.sdp.compose)
 
+    //ToolTip
+    implementation (libs.ytooltip)
 }
 

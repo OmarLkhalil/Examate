@@ -13,10 +13,11 @@ composeBom = "2024.10.01"
 navCompose = "2.8.3"
 
 datastorePreferences = "1.1.1"
-hilt_compose = "1.7.5"
+hilt_compose = "1.2.0"
 composeLiveData = "1.6.2"
 coil = "2.5.0"
 sdpCompose = "1.1.0"
+ytooltip = "1.0.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -39,9 +40,10 @@ hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", ve
 androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastorePreferences" }
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
 nav-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navCompose" }
-#hilt-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hilt_compose" }
+hilt-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hilt_compose" }
 compose-livedata = { module = "androidx.compose.runtime:runtime-livedata", version.ref = "composeLiveData" }
 sdp-compose = { module = "com.github.Kaaveh:sdp-compose", version.ref = "sdpCompose" }
+ytooltip = { module = "co.yml:ytooltip", version.ref = "ytooltip" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
