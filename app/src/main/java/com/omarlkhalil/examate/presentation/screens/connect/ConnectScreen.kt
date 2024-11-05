@@ -33,13 +33,14 @@ import com.omarlkhalil.examate.R
 import com.omarlkhalil.examate.domain.model.connections.ConnectItemModel
 import com.omarlkhalil.examate.domain.model.connections.UserModel
 import com.omarlkhalil.examate.presentation.components.ConnectCardItem
+import com.omarlkhalil.examate.presentation.screens.elements.ScreenContainer
 import com.omarlkhalil.examate.presentation.theme.RTTheme
 import ir.kaaveh.sdpcompose.sdp
 
 
 @Composable
 fun ConnectScreen() {
-    Column(modifier = Modifier.fillMaxSize()) {
+    ScreenContainer{
         Tabs()
     }
 }

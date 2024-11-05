@@ -62,6 +62,7 @@ import com.omarlkhalil.examate.presentation.components.ToolTipHintItem
 import com.omarlkhalil.examate.presentation.components.ToolTipItem
 import com.omarlkhalil.examate.presentation.components.WritingQuestionsCard
 import com.omarlkhalil.examate.presentation.screens.SharedViewModel
+import com.omarlkhalil.examate.presentation.screens.elements.ScreenContainer
 import com.omarlkhalil.examate.presentation.theme.RTTheme
 import ir.kaaveh.sdpcompose.sdp
 
@@ -72,7 +73,7 @@ internal fun QuestionsScreen(
     viewModel: SharedViewModel = hiltViewModel()
 ) {
     val visibleHintCoordinates = remember {mutableStateOf(viewModel.visibleHintCoordinates.value)}
-    Column(modifier = Modifier.fillMaxSize()) {
+    ScreenContainer{
         QuestionsTabs(
             questionScreenHintState,
             visibleHintCoordinates,
@@ -306,8 +307,6 @@ private fun QuestionsGridList(
                     isHintVisible = questionScreenHintState.isFirstItemHintVisible,
                     visibleHintCoordinates = visibleHintCoordinates,
                     onClick = {
-                        viewModel.updateSelectedIndex(2)
-
                     },
                     customContent = {
                         WritingQuestionsCard(it)
@@ -393,7 +392,7 @@ private fun MyTabItem(
         } else {
             Black
         },
-        animationSpec = tween(easing = LinearEasing),
+        animationSpec = tween(easing = LinearEasing), label = "",
     )
     Text(
         modifier = Modifier

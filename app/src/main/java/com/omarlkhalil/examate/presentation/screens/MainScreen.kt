@@ -2,6 +2,10 @@ package com.omarlkhalil.examate.presentation.screens
 
 import android.os.Handler
 import android.os.Looper
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -17,9 +21,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
@@ -30,6 +36,7 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.LayoutCoordinates
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -44,12 +51,15 @@ import com.omarlkhalil.examate.presentation.components.ToolTipHintItem
 import com.omarlkhalil.examate.presentation.components.ToolTipItem
 import com.omarlkhalil.examate.presentation.extensions.currentScreenAsState
 import com.omarlkhalil.examate.presentation.extensions.navigateToRootScreen
+import com.omarlkhalil.examate.presentation.navigation.MainGraph
 import com.omarlkhalil.examate.presentation.navigation.Roots
 import com.omarlkhalil.examate.presentation.screens.SharedViewModel.Companion.ORAL_TAB_INDEX
 import com.omarlkhalil.examate.presentation.screens.connect.ConnectScreen
+import com.omarlkhalil.examate.presentation.screens.elements.ScreenContainer
 import com.omarlkhalil.examate.presentation.screens.home.HomeScreen
 import com.omarlkhalil.examate.presentation.screens.questions.QuestionScreenHintState
 import com.omarlkhalil.examate.presentation.screens.questions.QuestionsScreen
+import com.omarlkhalil.examate.presentation.screens.splash.SplashScreen
 import com.omarlkhalil.examate.presentation.theme.RTTheme
 import kotlin.math.roundToInt
 
@@ -113,92 +123,95 @@ internal fun MainScreen(
     val isFilterHintVisible = remember { mutableStateOf(false) }
     val selectedIndex by sharedViewModel.selectedIndex.collectAsState()
 
-
-//    if (isTutorialActive) {
-    ToolTipScreen(
-        paddingHighlightArea = 0f,
-        backgroundTransparency = 0.7f,
-        cornerRadiusHighlightArea = 0f,
-        mainContent = {
-            Scaffold(
-                modifier = modifier.nestedScroll(nestedScrollConnection),
-                containerColor = RTTheme.color.background,
-                topBar = {
-                    BaseTopBar(navController)
-                },
-                bottomBar = {
-                    RTBottomNavigationToolTip(
-                        modifier = Modifier
-                            .height(bottomBarHeight),
-                        onUpdateSelectedIndex = {
-                            sharedViewModel.updateSelectedIndex(it)
+    var isSplashFinished by remember {mutableStateOf(false)}
+    SplashScreen{ isSplashFinished = true }
+    if (isTutorialActive) {
+        if(isSplashFinished){
+            ToolTipScreen(
+                paddingHighlightArea = 0f,
+                backgroundTransparency = 0.7f,
+                cornerRadiusHighlightArea = 0f,
+                mainContent = {
+                    Scaffold(
+                        modifier = modifier.nestedScroll(nestedScrollConnection),
+                        containerColor = RTTheme.color.background,
+                        topBar = {
+                            BaseTopBar(navController)
                         },
-                        visibleHintCoordinates = visibleHintCoordinates,
-                        isHintVisibleHome = isHintVisibleHome,
-                        isHintVisibleConnect = isHintVisibleConnect,
-                        isHintVisibleQuestions = isHintVisibleQuestions,
-                        isHintVisibleTools = isHintVisibleTools,
-                        isFirstItemHintVisible = isFirstItemHintVisible,
-                        isHintVisibleProfile = isHintVisibleProfile,
-                        viewModel = sharedViewModel
-                    )
-                }, content = {
-                    Box(Modifier.padding(it)) {
-                        Body(
-                            selectedIndex,
-                            QuestionScreenHintState(
-                                isFilterHintVisible,
-                                isHintVisibleTools,
-                                isFirstItemHintVisible
+                        bottomBar = {
+                            RTBottomNavigationToolTip(
+                                modifier = Modifier
+                                    .height(bottomBarHeight),
+                                onUpdateSelectedIndex = {
+                                    sharedViewModel.updateSelectedIndex(it)
+                                },
+                                visibleHintCoordinates = visibleHintCoordinates,
+                                isHintVisibleHome = isHintVisibleHome,
+                                isHintVisibleConnect = isHintVisibleConnect,
+                                isHintVisibleQuestions = isHintVisibleQuestions,
+                                isHintVisibleTools = isHintVisibleTools,
+                                isFirstItemHintVisible = isFirstItemHintVisible,
+                                isHintVisibleProfile = isHintVisibleProfile,
+                                viewModel = sharedViewModel
                             )
-                        )
-                    }
-                }
+                        }, content = {
+                            Box(Modifier.padding(it)) {
+                                Body(
+                                    selectedIndex,
+                                    QuestionScreenHintState(
+                                        isFilterHintVisible,
+                                        isHintVisibleTools,
+                                        isFirstItemHintVisible
+                                    )
+                                )
+                            }
+                        }
+                    )
+                },
+                anyHintVisible = isTipVisible(
+                    isHintVisibleHome,
+                    isHintVisibleConnect,
+                    isHintVisibleQuestions,
+                    isHintVisibleTools,
+                    isFirstItemHintVisible,
+                    isFilterHintVisible,
+                    isHintVisibleProfile
+                ).value,
+                visibleHintCoordinates = visibleHintCoordinates,
             )
-        },
-        anyHintVisible = isTipVisible(
-            isHintVisibleHome,
-            isHintVisibleConnect,
-            isHintVisibleQuestions,
-            isHintVisibleTools,
-            isFirstItemHintVisible,
-            isFilterHintVisible,
-            isHintVisibleProfile
-        ).value,
-        visibleHintCoordinates = visibleHintCoordinates,
-    )
-//    } else {
-//        Scaffold(
-//            modifier = modifier.nestedScroll(nestedScrollConnection),
-//            containerColor = RTTheme.color.background,
-//            topBar = {
-//                BaseTopBar(navController)
-//            },
-//            bottomBar = {
-//                AnimatedVisibility(
-//                    visible = bottomBarOffsetHeightPx.floatValue != -bottomBarHeightPx,
-//                    enter = slideInVertically(
-//                        animationSpec = tween(1000)
-//                    ),
-//                    modifier = bottomNavModifier,
-//                    exit = slideOutVertically(
-//                        animationSpec = tween(10)
-//                    ),
-//                ) {
-//                    RTBottomNavigation(
-//                        navController = navController,
-//                        currentSelectedScreen = currentScreen,
-//                        modifier = Modifier.fillMaxWidth(),
-//                        containerColor = RTTheme.color.white
-//                    )
-//                }
-//            }
-//        ) {
-//            Box(modifier = Modifier.padding(it)) {
-//                MainGraph(navController = navController)
-//            }
-//        }
-//    }
+        }
+    } else {
+        Scaffold(
+            modifier = modifier.nestedScroll(nestedScrollConnection),
+            containerColor = RTTheme.color.background,
+            topBar = {
+                BaseTopBar(navController)
+            },
+            bottomBar = {
+                AnimatedVisibility(
+                    visible = bottomBarOffsetHeightPx.floatValue != -bottomBarHeightPx,
+                    enter = slideInVertically(
+                        animationSpec = tween(1000)
+                    ),
+                    modifier = bottomNavModifier,
+                    exit = slideOutVertically(
+                        animationSpec = tween(10)
+                    ),
+                ) {
+                    RTBottomNavigation(
+                        navController = navController,
+                        currentSelectedScreen = currentScreen,
+                        modifier = Modifier.fillMaxWidth(),
+                        containerColor = RTTheme.color.white
+                    )
+                }
+            }
+        ) {
+            Box(modifier = Modifier.padding(it)) {
+                MainGraph(navController = navController, startDestination = Roots.Home.route)
+            }
+        }
+    }
 }
 
 @Composable
@@ -220,14 +233,22 @@ fun Body(
         }
 
         3 -> {
-            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                Text(text = "Tools")
+            ScreenContainer {
+                Text(
+                    text = "Tools",
+                    modifier = Modifier.fillMaxSize(),
+                    textAlign = TextAlign.Center
+                )
             }
         }
 
         4 -> {
-            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                Text(text = "Profile")
+            ScreenContainer {
+                Text(
+                    text = "Profile",
+                    modifier = Modifier.fillMaxSize(),
+                    textAlign = TextAlign.Center
+                )
             }
         }
     }

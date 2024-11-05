@@ -19,7 +19,8 @@ data class RTColor(
     val accent: Color,
     val black: Color = Color.Black,
     val gray: Color = Color.Gray,
-    val white: Color = Color.White
+    val white: Color = Color.White,
+    val blue : Color = Color(0xFF54E9E9)
 )
 
 val rtThemeColors = RTColor(

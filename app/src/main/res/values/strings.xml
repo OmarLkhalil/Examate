@@ -15,4 +15,6 @@
     <string name="close">Close</string>
     <string name="next">Next</string>
     <string name="hint">Cliquez ici pour voir par catégories avec progression</string>
+    <string name="splash_welcome">welcome to:  how to use and enjoy Examate</string>
+    <string name="splash_onboarding">"Tap anywhere on the screen to continue "</string>
 </resources>

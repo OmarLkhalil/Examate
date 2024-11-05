@@ -18,28 +18,29 @@ import androidx.compose.ui.text.style.TextAlign
 import com.omarlkhalil.examate.presentation.components.ProgressSteps
 import com.omarlkhalil.examate.presentation.theme.RTTheme
 import com.omarlkhalil.examate.R
+import com.omarlkhalil.examate.presentation.screens.elements.ScreenContainer
 import ir.kaaveh.sdpcompose.sdp
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen() {
-    Column(
-        Modifier
-            .fillMaxSize()
-            .background(RTTheme.color.background),
-        verticalArrangement = Arrangement.spacedBy(15.sdp),
-    ) {
-        HelloTextTile("Omar Khalil")
-        Text(
-            text = stringResource(R.string.study_plan),
-            textAlign = TextAlign.Start,
-            modifier = Modifier.padding(start = 12.sdp),
-            style = RTTheme.typography.bold24,
-            color = RTTheme.color.primary600,
-        )
-        ProgressSteps()
+    ScreenContainer{
+        Column(Modifier.fillMaxSize().background(RTTheme.color.background),
+            verticalArrangement = Arrangement.spacedBy(15.sdp),
+        ) {
+            HelloTextTile("Omar Khalil")
+            Text(
+                text = stringResource(R.string.study_plan),
+                textAlign = TextAlign.Start,
+                modifier = Modifier.padding(start = 12.sdp),
+                style = RTTheme.typography.bold24,
+                color = RTTheme.color.primary600,
+            )
+            ProgressSteps()
+        }
     }
+
 }
 
 

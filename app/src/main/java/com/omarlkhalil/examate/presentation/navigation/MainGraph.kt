@@ -12,19 +12,22 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navOptions
 import com.omarlkhalil.examate.presentation.screens.connect.ConnectScreen
 import com.omarlkhalil.examate.presentation.screens.home.HomeScreen
 import com.omarlkhalil.examate.presentation.screens.questions.QuestionScreenHintState
 import com.omarlkhalil.examate.presentation.screens.questions.QuestionsScreen
+import com.omarlkhalil.examate.presentation.screens.splash.SplashScreen
 
 
 @Composable
-internal fun MainGraph(navController: NavHostController) {
-    NavHost(navController = navController, startDestination = Roots.Home.route) {
+internal fun MainGraph(navController: NavHostController, startDestination: String) {
+    NavHost(navController = navController, startDestination =startDestination) {
         homeScreen(navController)
         connectScreen(navController)
         questionsScreen(navController)
         profileScreen(navController)
+        splashScreen(navController)
         toolsScreen(navController)
     }
 }
@@ -45,6 +48,22 @@ private fun NavGraphBuilder.connectScreen(navController: NavController) {
 private fun NavGraphBuilder.questionsScreen(navController: NavController) {
     composable(route = Roots.Questions.route) {
         QuestionsScreen(QuestionScreenHintState())
+    }
+}
+
+private fun NavGraphBuilder.splashScreen(
+    navController: NavController,
+) {
+    composable(route = Roots.Splash.route) {
+        SplashScreen {
+            navController.navigate(route = Roots.Home.route,
+                navOptions = navOptions {
+                    popUpTo(Roots.Splash.route) {
+                        inclusive = true
+                    }
+                }
+            )
+        }
     }
 }
 
