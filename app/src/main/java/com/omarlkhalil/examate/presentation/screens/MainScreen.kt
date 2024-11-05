@@ -48,6 +48,7 @@ import com.omarlkhalil.examate.presentation.navigation.Roots
 import com.omarlkhalil.examate.presentation.screens.SharedViewModel.Companion.ORAL_TAB_INDEX
 import com.omarlkhalil.examate.presentation.screens.connect.ConnectScreen
 import com.omarlkhalil.examate.presentation.screens.home.HomeScreen
+import com.omarlkhalil.examate.presentation.screens.questions.QuestionScreenHintState
 import com.omarlkhalil.examate.presentation.screens.questions.QuestionsScreen
 import com.omarlkhalil.examate.presentation.theme.RTTheme
 import kotlin.math.roundToInt
@@ -107,6 +108,7 @@ internal fun MainScreen(
     val isHintVisibleConnect = remember { mutableStateOf(false) }
     val isHintVisibleQuestions = remember { mutableStateOf(false) }
     val isHintVisibleTools = remember { mutableStateOf(false) }
+    val isFirstItemHintVisible = remember { mutableStateOf(false) }
     val isHintVisibleProfile = remember { mutableStateOf(false) }
     val isFilterHintVisible = remember { mutableStateOf(false) }
     val selectedIndex by sharedViewModel.selectedIndex.collectAsState()
@@ -136,7 +138,7 @@ internal fun MainScreen(
                         isHintVisibleConnect = isHintVisibleConnect,
                         isHintVisibleQuestions = isHintVisibleQuestions,
                         isHintVisibleTools = isHintVisibleTools,
-                        isFilterHintVisible = isFilterHintVisible,
+                        isFirstItemHintVisible = isFirstItemHintVisible,
                         isHintVisibleProfile = isHintVisibleProfile,
                         viewModel = sharedViewModel
                     )
@@ -144,8 +146,11 @@ internal fun MainScreen(
                     Box(Modifier.padding(it)) {
                         Body(
                             selectedIndex,
-                            isFilterHintVisible,
-                            isHintVisibleTools
+                            QuestionScreenHintState(
+                                isFilterHintVisible,
+                                isHintVisibleTools,
+                                isFirstItemHintVisible
+                            )
                         )
                     }
                 }
@@ -156,6 +161,7 @@ internal fun MainScreen(
             isHintVisibleConnect,
             isHintVisibleQuestions,
             isHintVisibleTools,
+            isFirstItemHintVisible,
             isFilterHintVisible,
             isHintVisibleProfile
         ).value,
@@ -198,8 +204,7 @@ internal fun MainScreen(
 @Composable
 fun Body(
     selectedIndex: Int,
-    isFilterHintVisible: MutableState<Boolean>,
-    isToolsHintVisible: MutableState<Boolean>
+    questionScreenHintState: QuestionScreenHintState
 ) {
     when (selectedIndex) {
         0 -> {
@@ -211,10 +216,7 @@ fun Body(
         }
 
         2 -> {
-            QuestionsScreen(
-                isFilterHintVisible,
-                isToolsHintVisible
-            )
+            QuestionsScreen(questionScreenHintState)
         }
 
         3 -> {
@@ -294,7 +296,7 @@ private fun RTBottomNavigationToolTip(
     isHintVisibleQuestions: MutableState<Boolean>,
     isHintVisibleTools: MutableState<Boolean>,
     isHintVisibleProfile: MutableState<Boolean>,
-    isFilterHintVisible: MutableState<Boolean>,
+    isFirstItemHintVisible: MutableState<Boolean>,
     viewModel: SharedViewModel,
 ) {
 
@@ -304,7 +306,7 @@ private fun RTBottomNavigationToolTip(
         isHintVisibleQuestions.value = false
         isHintVisibleTools.value = false
         isHintVisibleProfile.value = false
-        isFilterHintVisible.value = false
+        isFirstItemHintVisible.value = false
     }
 
     NavigationBar(
@@ -373,6 +375,7 @@ private fun RTBottomNavigationToolTip(
             visibleHintCoordinates = visibleHintCoordinates,
             onClick = {
                 resetHints()
+                viewModel.setTabsIndex(0)
                 isHintVisibleQuestions.value = true
                 onUpdateSelectedIndex(2)
             },
@@ -383,10 +386,10 @@ private fun RTBottomNavigationToolTip(
                     onCloseClick = { viewModel.endTutorial() },
                     onNextClick = {
                         resetHints()
-                        viewModel.setTabsIndex(ORAL_TAB_INDEX)
-                        Handler(Looper.getMainLooper()).post{
+                        Handler(Looper.getMainLooper()).post {
+                            viewModel.setTabsIndex(0)
                             onUpdateSelectedIndex(2)
-                            isFilterHintVisible.value = true
+                            isFirstItemHintVisible.value = true
                         }
                     },
                     icon = R.drawable.ic_nav_questions

@@ -30,13 +30,15 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import com.omarlkhalil.examate.R
+import com.omarlkhalil.examate.domain.model.questions.OralQuestionsModel
+import com.omarlkhalil.examate.domain.model.questions.WritingQuestionsModel
 import com.omarlkhalil.examate.presentation.theme.RTTheme
 import ir.kaaveh.sdpcompose.sdp
 
 
 @Composable
 internal fun OralQuestionsCard(
-    questionItem: OralQuestionItemModel
+    questionItem: OralQuestionsModel
 ) {
     ElevatedCard(
         colors = CardDefaults.cardColors(containerColor = RTTheme.color.white),
@@ -107,7 +109,7 @@ internal fun OralQuestionsCard(
 
 @Composable
 internal fun WritingQuestionsCard(
-    questionItem: WritingQuestionModel
+    questionItem: WritingQuestionsModel
 ) {
     ElevatedCard(
         colors = CardDefaults.cardColors(containerColor = RTTheme.color.white),
@@ -226,19 +228,4 @@ private fun OralQuestionsTextItem(modifier: Modifier = Modifier, titles: List<St
     }
 }
 
-data class OralQuestionItemModel(
-    val question: String = "",
-    val answersCount: Int = 0,
-    val answer: String = "",
-    val titles: List<String> = mutableListOf(),
-    val date: String = ""
-)
 
-data class WritingQuestionModel(
-    val question: String = "",
-    val type: String = "",
-    val progress: Float,
-    val icon: Int,
-    val answersCount: Int = 0,
-    val questionsCount: Int = 0
-)

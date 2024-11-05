@@ -14,11 +14,12 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.omarlkhalil.examate.presentation.screens.connect.ConnectScreen
 import com.omarlkhalil.examate.presentation.screens.home.HomeScreen
+import com.omarlkhalil.examate.presentation.screens.questions.QuestionScreenHintState
 import com.omarlkhalil.examate.presentation.screens.questions.QuestionsScreen
 
 
 @Composable
-fun MainGraph(navController: NavHostController) {
+internal fun MainGraph(navController: NavHostController) {
     NavHost(navController = navController, startDestination = Roots.Home.route) {
         homeScreen(navController)
         connectScreen(navController)
@@ -43,7 +44,7 @@ private fun NavGraphBuilder.connectScreen(navController: NavController) {
 
 private fun NavGraphBuilder.questionsScreen(navController: NavController) {
     composable(route = Roots.Questions.route) {
-        QuestionsScreen()
+        QuestionsScreen(QuestionScreenHintState())
     }
 }
 

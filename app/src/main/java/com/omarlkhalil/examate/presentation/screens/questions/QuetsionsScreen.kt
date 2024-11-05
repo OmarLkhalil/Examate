@@ -55,11 +55,11 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.omarlkhalil.examate.R
-import com.omarlkhalil.examate.presentation.components.OralQuestionItemModel
+import com.omarlkhalil.examate.domain.model.questions.OralQuestionsModel
+import com.omarlkhalil.examate.domain.model.questions.WritingQuestionsModel
 import com.omarlkhalil.examate.presentation.components.OralQuestionsCard
 import com.omarlkhalil.examate.presentation.components.ToolTipHintItem
 import com.omarlkhalil.examate.presentation.components.ToolTipItem
-import com.omarlkhalil.examate.presentation.components.WritingQuestionModel
 import com.omarlkhalil.examate.presentation.components.WritingQuestionsCard
 import com.omarlkhalil.examate.presentation.screens.SharedViewModel
 import com.omarlkhalil.examate.presentation.theme.RTTheme
@@ -67,16 +67,14 @@ import ir.kaaveh.sdpcompose.sdp
 
 
 @Composable
-fun QuestionsScreen(
-    isFilterHintVisible: MutableState<Boolean> = mutableStateOf(false),
-    isToolsHintVisible: MutableState<Boolean> = mutableStateOf(false),
+internal fun QuestionsScreen(
+    questionScreenHintState: QuestionScreenHintState,
     viewModel: SharedViewModel = hiltViewModel()
 ) {
-    val visibleHintCoordinates = remember { mutableStateOf(viewModel.visibleHintCoordinates.value) }
+    val visibleHintCoordinates = remember {mutableStateOf(viewModel.visibleHintCoordinates.value)}
     Column(modifier = Modifier.fillMaxSize()) {
         QuestionsTabs(
-            isFilterHintVisible,
-            isToolsHintVisible,
+            questionScreenHintState,
             visibleHintCoordinates,
             viewModel
         )
@@ -84,9 +82,8 @@ fun QuestionsScreen(
 }
 
 @Composable
-fun QuestionsTabs(
-    isFilterHintVisible: MutableState<Boolean>,
-    isToolsHintVisible: MutableState<Boolean>,
+internal fun QuestionsTabs(
+    questionScreenHintState: QuestionScreenHintState,
     visibleHintCoordinates: MutableState<LayoutCoordinates?>,
     viewModel: SharedViewModel
 ) {
@@ -140,10 +137,13 @@ fun QuestionsTabs(
             }
         }
         when (tabIndex) {
-            0 -> Writing()
+            0 -> Writing(
+                questionScreenHintState,
+                visibleHintCoordinates
+            )
+
             1 -> Oral(
-                isFilterHintVisible,
-                isToolsHintVisible,
+                questionScreenHintState,
                 visibleHintCoordinates,
                 viewModel
             )
@@ -152,9 +152,8 @@ fun QuestionsTabs(
 }
 
 @Composable
-fun Oral(
-    isFilterHintVisible: MutableState<Boolean>,
-    isToolsHintVisible: MutableState<Boolean>,
+internal fun Oral(
+    questionsState: QuestionScreenHintState,
     visibleHintCoordinates: MutableState<LayoutCoordinates?>,
     viewModel: SharedViewModel
 ) {
@@ -164,11 +163,11 @@ fun Oral(
         contentPadding = PaddingValues(10.sdp)
     ) {
         item {
-            if (isFilterHintVisible.value) {
+            if (questionsState.isFilterHintVisible.value) {
                 ToolTipHintItem(
-                    iconRes = R.drawable.ic_nav_home,
+                    iconRes = R.drawable.ic_filters,
                     textRes = R.string.home,
-                    isHintVisible = isFilterHintVisible,
+                    isHintVisible = questionsState.isFilterHintVisible,
                     visibleHintCoordinates = visibleHintCoordinates,
                     onClick = {
                         viewModel.updateSelectedIndex(2)
@@ -200,12 +199,14 @@ fun Oral(
                     customHintContent = {
                         ToolTipItem(
                             hintText = stringResource(R.string.hint),
-                            isHintVisible = isFilterHintVisible,
+                            isHintVisible = questionsState.isFilterHintVisible,
                             onNextClick = {
-                                isFilterHintVisible.value = !isFilterHintVisible.value
+                                questionsState.isFilterHintVisible.value =
+                                    !questionsState.isFilterHintVisible.value
                                 viewModel.updateSelectedIndex(3)
                                 Handler(Looper.getMainLooper()).postDelayed({
-                                    isToolsHintVisible.value = !isToolsHintVisible.value
+                                    questionsState.isToolsHintVisible.value =
+                                        !questionsState.isToolsHintVisible.value
                                 }, 1000)
                             },
                             icon = R.drawable.ic_filters
@@ -239,25 +240,33 @@ fun Oral(
             }
         }
         items(questionsList) {
+
             OralQuestionsCard(it)
+
         }
     }
 }
 
 @Composable
-private fun Writing() {
+private fun Writing(
+    questionScreenHintState: QuestionScreenHintState,
+    visibleCoordinates: MutableState<LayoutCoordinates?> = mutableStateOf(null),
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(top = 10.sdp)
     ) {
-        CustomTabSample()
+        CustomTabSample(questionScreenHintState, visibleCoordinates)
     }
 
 }
 
 @Composable
-fun CustomTabSample() {
+internal fun CustomTabSample(
+    questionScreenHintState: QuestionScreenHintState,
+    visibleCoordinates: MutableState<LayoutCoordinates?> = mutableStateOf(null),
+) {
 
     val (selected, setSelected) = remember {
         mutableIntStateOf(0)
@@ -271,13 +280,17 @@ fun CustomTabSample() {
     )
 
     when (selected) {
-        0 -> QuestionsGridList()
-        1 -> QuestionsGridList()
+        0 -> QuestionsGridList(questionScreenHintState, visibleCoordinates)
+        1 -> QuestionsGridList(questionScreenHintState, visibleCoordinates)
     }
 }
 
 @Composable
-private fun QuestionsGridList() {
+private fun QuestionsGridList(
+    questionScreenHintState: QuestionScreenHintState,
+    visibleHintCoordinates: MutableState<LayoutCoordinates?> = mutableStateOf(null),
+    viewModel: SharedViewModel = hiltViewModel(),
+) {
     LazyVerticalGrid(
         modifier = Modifier.fillMaxWidth(),
         columns = GridCells.Fixed(2),
@@ -286,14 +299,46 @@ private fun QuestionsGridList() {
         horizontalArrangement = Arrangement.spacedBy(5.sdp)
     ) {
         items(writingsList) {
-            WritingQuestionsCard(it)
+            if (writingsList.indexOf(it) == 0) {
+                ToolTipHintItem(
+                    iconRes = R.drawable.ic_filters,
+                    textRes = R.string.home,
+                    isHintVisible = questionScreenHintState.isFirstItemHintVisible,
+                    visibleHintCoordinates = visibleHintCoordinates,
+                    onClick = {
+                        viewModel.updateSelectedIndex(2)
+
+                    },
+                    customContent = {
+                        WritingQuestionsCard(it)
+                    },
+                    customHintContent = {
+                        ToolTipItem(
+                            hintText = stringResource(R.string.hint),
+                            isHintVisible = questionScreenHintState.isFirstItemHintVisible,
+                            onNextClick = {
+                                questionScreenHintState.isFirstItemHintVisible.value =
+                                    !questionScreenHintState.isFirstItemHintVisible.value
+                                Handler(Looper.getMainLooper()).postDelayed({
+                                    viewModel.setTabsIndex(1)
+                                    questionScreenHintState.isFilterHintVisible.value =
+                                        !questionScreenHintState.isFilterHintVisible.value
+                                }, 1000)
+                            },
+                            icon = R.drawable.ic_filters
+                        )
+                    }
+                )
+            } else {
+                WritingQuestionsCard(it)
+            }
         }
     }
 }
 
 
 @Composable
-fun CustomTab(
+internal fun CustomTab(
     selectedItemIndex: Int,
     items: List<String>,
     modifier: Modifier = Modifier,
@@ -392,7 +437,7 @@ private fun MyTabIndicator(
 }
 
 val questionsList = listOf(
-    OralQuestionItemModel(
+    OralQuestionsModel(
         question = "Je suis votre collègue, je participe chaque année à une course à pieds pour célébrer le printemps.Vous êtes\n" +
                 "intéressé. Vous me posez des questions pour avoir des informations (parcours, durée, participants, etc.)",
         answersCount = 11,
@@ -400,7 +445,7 @@ val questionsList = listOf(
         titles = listOf("Events", "Task 2"),
         date = "13 May 2023"
     ),
-    OralQuestionItemModel(
+    OralQuestionsModel(
         question = "Je suis votre collègue, je participe chaque année à une course à pieds pour célébrer le printemps.Vous êtes\n" +
                 "intéressé. Vous me posez des questions pour avoir des informations (parcours, durée, participants, etc.)",
         answersCount = 11,
@@ -408,7 +453,7 @@ val questionsList = listOf(
         titles = listOf("Technology", "Task 3"),
         date = "13 May 2023"
     ),
-    OralQuestionItemModel(
+    OralQuestionsModel(
         question = "Je suis votre collègue, je participe chaque année à une course à pieds pour célébrer le printemps.Vous êtes\n" +
                 "intéressé. Vous me posez des questions pour avoir des informations (parcours, durée, participants, etc.)",
         answersCount = 11,
@@ -416,7 +461,7 @@ val questionsList = listOf(
         titles = listOf("Culture", "Task 3"),
         date = "13 May 2023"
     ),
-    OralQuestionItemModel(
+    OralQuestionsModel(
         question = "Je suis votre collègue, je participe chaque année à une course à pieds pour célébrer le printemps.Vous êtes\n" +
                 "intéressé. Vous me posez des questions pour avoir des informations (parcours, durée, participants, etc.)",
         answersCount = 11,
@@ -424,7 +469,7 @@ val questionsList = listOf(
         titles = listOf("Technology", "Task 3"),
         date = "13 May 2023"
     ),
-    OralQuestionItemModel(
+    OralQuestionsModel(
         question = "Je suis votre collègue, je participe chaque année à une course à pieds pour célébrer le printemps.Vous êtes\n" +
                 "intéressé. Vous me posez des questions pour avoir des informations (parcours, durée, participants, etc.)",
         answersCount = 11,
@@ -432,7 +477,7 @@ val questionsList = listOf(
         titles = listOf("Technology", "Task 3"),
         date = "13 May 2023"
     ),
-    OralQuestionItemModel(
+    OralQuestionsModel(
         question = "Je suis votre collègue, je participe chaque année à une course à pieds pour célébrer le printemps.Vous êtes\n" +
                 "intéressé. Vous me posez des questions pour avoir des informations (parcours, durée, participants, etc.)",
         answersCount = 11,
@@ -440,7 +485,7 @@ val questionsList = listOf(
         titles = listOf("Technology", "Task 3"),
         date = "13 May 2023"
     ),
-    OralQuestionItemModel(
+    OralQuestionsModel(
         question = "Je suis votre collègue, je participe chaque année à une course à pieds pour célébrer le printemps.Vous êtes\n" +
                 "intéressé. Vous me posez des questions pour avoir des informations (parcours, durée, participants, etc.)",
         answersCount = 11,
@@ -451,42 +496,42 @@ val questionsList = listOf(
 )
 
 val writingsList = listOf(
-    WritingQuestionModel(
+    WritingQuestionsModel(
         type = "Voyage",
         answersCount = 10,
         questionsCount = 10,
         progress = 100f,
         icon = R.drawable.ic_travel
     ),
-    WritingQuestionModel(
+    WritingQuestionsModel(
         type = "Immigration",
         answersCount = 6,
         questionsCount = 10,
         progress = 50f,
         icon = R.drawable.ic_travel
     ),
-    WritingQuestionModel(
+    WritingQuestionsModel(
         type = "Technologie",
         answersCount = 4,
         questionsCount = 10,
         progress = 60f,
         icon = R.drawable.ic_tech
     ),
-    WritingQuestionModel(
+    WritingQuestionsModel(
         type = "Art et Culture",
         answersCount = 4,
         questionsCount = 10,
         progress = 70f,
         icon = R.drawable.ic_art
     ),
-    WritingQuestionModel(
+    WritingQuestionsModel(
         type = "Environm-ent ",
         answersCount = 5,
         questionsCount = 10,
         progress = 40f,
         icon = R.drawable.ic_enviroment
     ),
-    WritingQuestionModel(
+    WritingQuestionsModel(
         type = "Travel",
         answersCount = 3,
         questionsCount = 10,
@@ -494,3 +539,4 @@ val writingsList = listOf(
         icon = R.drawable.ic_travel
     )
 )
+

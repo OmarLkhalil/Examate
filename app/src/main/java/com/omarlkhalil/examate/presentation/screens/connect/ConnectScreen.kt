@@ -30,9 +30,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import com.omarlkhalil.examate.R
+import com.omarlkhalil.examate.domain.model.connections.ConnectItemModel
+import com.omarlkhalil.examate.domain.model.connections.UserModel
 import com.omarlkhalil.examate.presentation.components.ConnectCardItem
-import com.omarlkhalil.examate.presentation.components.ConnectItemModel
-import com.omarlkhalil.examate.presentation.components.UserinfoItems
 import com.omarlkhalil.examate.presentation.theme.RTTheme
 import ir.kaaveh.sdpcompose.sdp
 
@@ -132,10 +132,10 @@ val connectionsList = listOf(
         image = "https://randomuser.me/api/portraits/men/74.jpg",
         target = "B2",
         userInfo = listOf(
-            UserinfoItems("Cairo", Icons.Outlined.LocationOn),
-            UserinfoItems("Male", Icons.Outlined.Person),
-            UserinfoItems("26", Icons.Outlined.DateRange),
-            UserinfoItems("12/12/2021", Icons.Outlined.DateRange)
+            UserModel("Cairo", Icons.Outlined.LocationOn),
+            UserModel("Male", Icons.Outlined.Person),
+            UserModel("26", Icons.Outlined.DateRange),
+            UserModel("12/12/2021", Icons.Outlined.DateRange)
         ),
         languages = listOf("Arabic", "English")
     ),
@@ -144,10 +144,10 @@ val connectionsList = listOf(
         image = "https://randomuser.me/api/portraits/men/65.jpg",
         target = "B2",
         userInfo = listOf(
-            UserinfoItems("Alexandria", Icons.Outlined.LocationOn),
-            UserinfoItems("Male", Icons.Outlined.Person),
-            UserinfoItems("30", Icons.Outlined.DateRange),
-            UserinfoItems("10/10/2020", Icons.Outlined.DateRange)
+            UserModel("Alexandria", Icons.Outlined.LocationOn),
+            UserModel("Male", Icons.Outlined.Person),
+            UserModel("30", Icons.Outlined.DateRange),
+            UserModel("10/10/2020", Icons.Outlined.DateRange)
         ),
         languages = listOf("Arabic", "French")
     ),
@@ -156,10 +156,10 @@ val connectionsList = listOf(
         image = "https://randomuser.me/api/portraits/women/68.jpg",
         target = "C1",
         userInfo = listOf(
-            UserinfoItems("Giza", Icons.Outlined.LocationOn),
-            UserinfoItems("Female", Icons.Outlined.Person),
-            UserinfoItems("24", Icons.Outlined.DateRange),
-            UserinfoItems("05/05/2019", Icons.Outlined.DateRange)
+            UserModel("Giza", Icons.Outlined.LocationOn),
+            UserModel("Female", Icons.Outlined.Person),
+            UserModel("24", Icons.Outlined.DateRange),
+            UserModel("05/05/2019", Icons.Outlined.DateRange)
         ),
         languages = listOf("Arabic", "English", "Spanish")
     ),
@@ -168,10 +168,10 @@ val connectionsList = listOf(
         image = "https://randomuser.me/api/portraits/men/75.jpg",
         target = "B1",
         userInfo = listOf(
-            UserinfoItems("New York", Icons.Outlined.LocationOn),
-            UserinfoItems("Male", Icons.Outlined.Person),
-            UserinfoItems("35", Icons.Outlined.DateRange),
-            UserinfoItems("01/01/2020", Icons.Outlined.DateRange)
+            UserModel("New York", Icons.Outlined.LocationOn),
+            UserModel("Male", Icons.Outlined.Person),
+            UserModel("35", Icons.Outlined.DateRange),
+            UserModel("01/01/2020", Icons.Outlined.DateRange)
         ),
         languages = listOf("English", "Spanish")
     ),
@@ -180,10 +180,10 @@ val connectionsList = listOf(
         image = "https://randomuser.me/api/portraits/women/73.jpg",
         target = "C2",
         userInfo = listOf(
-            UserinfoItems("Florida", Icons.Outlined.LocationOn),
-            UserinfoItems("Female", Icons.Outlined.Person),
-            UserinfoItems("29", Icons.Outlined.DateRange),
-            UserinfoItems("02/02/2021", Icons.Outlined.DateRange)
+            UserModel("Florida", Icons.Outlined.LocationOn),
+            UserModel("Female", Icons.Outlined.Person),
+            UserModel("29", Icons.Outlined.DateRange),
+            UserModel("02/02/2021", Icons.Outlined.DateRange)
         ),
         languages = listOf("English", "French")
     )

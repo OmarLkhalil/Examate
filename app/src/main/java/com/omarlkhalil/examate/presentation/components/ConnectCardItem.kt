@@ -29,6 +29,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.SubcomposeAsyncImage
 import coil.request.ImageRequest
+import com.omarlkhalil.examate.domain.model.connections.ConnectItemModel
 import com.omarlkhalil.examate.presentation.theme.RTTheme
 import ir.kaaveh.sdpcompose.sdp
 
@@ -181,18 +182,6 @@ private fun ConnectTextItem(icon: ImageVector, title: String) {
     }
 }
 
-data class ConnectItemModel(
-    val userName: String = "",
-    val image: String = "",
-    val target: String = "",
-    val userInfo: List<UserinfoItems> = listOf(),
-    val languages: List<String> = listOf(),
-)
-
-data class UserinfoItems(
-    val title: String = "",
-    val icon: ImageVector? = null,
-)
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable

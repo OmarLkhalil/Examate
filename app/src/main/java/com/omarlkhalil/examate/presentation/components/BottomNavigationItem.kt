@@ -72,7 +72,6 @@ fun ToolTipItem(
     icon : Int
 ) {
     val screenWidth = LocalConfiguration.current.screenWidthDp * 0.8f
-
     Column(
         horizontalAlignment = CenterHorizontally
     ) {

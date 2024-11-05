@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Icon
@@ -32,6 +33,8 @@ internal fun ToolTipHintItem(
     customHintContent: (@Composable (RowScope) -> Unit)? = null,
     customContent: (@Composable () -> Unit)? = null,
 ) {
+    val tintColor = if(isHintVisible.value) RTTheme.color.primary400 else RTTheme.color.contentSecondary
+
     ToolTipView(
         visibleHintCoordinates = visibleHintCoordinates,
         isHintVisible = isHintVisible,
@@ -47,8 +50,9 @@ internal fun ToolTipHintItem(
             }else {
                 Column(
                     modifier = Modifier
+                        .padding(top = 5.sdp)
+                        .clip(RTTheme.shapes.large)
                         .width(60.sdp)
-                        .clip(RTTheme.shapes.medium)
                         .height(70.sdp),
                     horizontalAlignment = CenterHorizontally
                 ) {
@@ -56,14 +60,14 @@ internal fun ToolTipHintItem(
                         painter = painterResource(iconRes),
                         modifier = Modifier.size(24.sdp),
                         contentDescription = stringResource(textRes),
-                        tint = RTTheme.color.gray,
+                        tint = tintColor,
                     )
                     Spacer(modifier = Modifier.size(RTTheme.dimens.space4))
                     Text(
                         text = stringResource(textRes),
                         style = RTTheme.typography.medium14,
                         maxLines = 1,
-                        color = RTTheme.color.gray
+                        color = tintColor
                     )
                 }
             }
