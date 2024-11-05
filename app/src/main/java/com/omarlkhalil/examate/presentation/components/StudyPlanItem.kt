@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.unit.Dp
-import com.omarlkhalil.examate.presentation.theme.RTTheme
+import com.omarlkhalil.examate.presentation.theme.ExamateTheme
 import ir.kaaveh.sdpcompose.sdp
 
 @Composable
@@ -40,12 +40,12 @@ private fun ProgressStepItem(
     isLocked: Boolean,
     showLine: Boolean = true
 ) {
-    val tintColor = if (!isCompleted) RTTheme.color.primary400 else RTTheme.color.primary200
+    val tintColor = if (!isCompleted) ExamateTheme.color.primary400 else ExamateTheme.color.primary200
     val backGroundColor =
-        if (!isCompleted) RTTheme.color.secondary400 else RTTheme.color.primary200
-    val textColor = if (!isCompleted) RTTheme.color.primary400 else RTTheme.color.contentSecondary
+        if (!isCompleted) ExamateTheme.color.secondary400 else ExamateTheme.color.primary200
+    val textColor = if (!isCompleted) ExamateTheme.color.primary400 else ExamateTheme.color.contentSecondary
     val progress = if (isLocked) 1f else progress
-    val trackColor = if (isCompleted) RTTheme.color.primary400 else RTTheme.color.primary200
+    val trackColor = if (isCompleted) ExamateTheme.color.primary400 else ExamateTheme.color.primary200
 
     Column(
         horizontalAlignment = Alignment.Start,
@@ -78,22 +78,22 @@ private fun ProgressStepItem(
                     ) {
                         Text(
                             text = stepNumber.toString(),
-                            style = RTTheme.typography.bold32,
-                            color = if (!isCompleted) RTTheme.color.primary400 else RTTheme.color.white
+                            style = ExamateTheme.typography.bold32,
+                            color = if (!isCompleted) ExamateTheme.color.primary400 else ExamateTheme.color.white
                         )
                     }
                     if (isLocked) {
                         Box(
                             modifier = Modifier
                                 .clip(CircleShape)
-                                .background(RTTheme.color.primary200)
+                                .background(ExamateTheme.color.primary200)
                                 .padding(5.sdp)
                                 .align(Alignment.BottomEnd)
                         ) {
                             Icon(
                                 imageVector = Icons.Outlined.Lock,
                                 contentDescription = "Locked",
-                                tint = RTTheme.color.white,
+                                tint = ExamateTheme.color.white,
                                 modifier = Modifier.size(20.sdp)
                             )
                         }
@@ -112,7 +112,7 @@ private fun ProgressStepItem(
             Text(
                 text = title,
                 modifier = Modifier.padding(bottom = 30.sdp),
-                style = RTTheme.typography.bold24,
+                style = ExamateTheme.typography.bold24,
                 color = textColor
             )
         }
@@ -133,7 +133,7 @@ internal fun ProgressSteps() {
     LazyColumn(
         modifier = Modifier
             .fillMaxWidth()
-            .background(RTTheme.color.background)
+            .background(ExamateTheme.color.background)
             .padding(10.sdp),
         horizontalAlignment = Alignment.Start
     ) {

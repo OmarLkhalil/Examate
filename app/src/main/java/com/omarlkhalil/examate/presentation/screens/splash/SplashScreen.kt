@@ -20,7 +20,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.omarlkhalil.examate.R
 import com.omarlkhalil.examate.presentation.screens.elements.VSpacer
-import com.omarlkhalil.examate.presentation.theme.RTTheme
+import com.omarlkhalil.examate.presentation.theme.ExamateTheme
 import ir.kaaveh.sdpcompose.sdp
 import kotlinx.coroutines.delay
 import kotlin.time.Duration.Companion.seconds
@@ -36,7 +36,7 @@ fun SplashScreen(
     Column(
         Modifier
             .fillMaxSize()
-            .background(RTTheme.color.black.copy(alpha = 0.7f))
+            .background(ExamateTheme.color.black.copy(alpha = 0.7f))
             .pointerInput(Unit) {
                 detectTapGestures { isOut = true }
             }
@@ -58,17 +58,17 @@ fun SplashScreen(
         Text(
             modifier = modifier,
             text = stringResource(id = R.string.splash_welcome),
-            style = RTTheme.typography.medium18,
+            style = ExamateTheme.typography.medium18,
             textAlign = TextAlign.Center,
-            color = RTTheme.color.white
+            color = ExamateTheme.color.white
         )
         VSpacer(height = 24.sdp)
         Text(
             modifier = modifier,
             text = stringResource(id = R.string.splash_onboarding),
-            style = RTTheme.typography.medium24,
+            style = ExamateTheme.typography.medium24,
             textAlign = TextAlign.Center,
-            color = RTTheme.color.blue
+            color = ExamateTheme.color.blue
         )
     }
 

@@ -26,7 +26,7 @@ import co.yml.tooltip.utils.DEFAULT_PADDING
 import co.yml.tooltip.utils.MAX_LINE
 import co.yml.tooltip.utils.TOOLTIP_MAX_WIDTH_PERCENT
 import com.omarlkhalil.examate.presentation.extensions.noIndicationClickable
-import com.omarlkhalil.examate.presentation.theme.RTTheme
+import com.omarlkhalil.examate.presentation.theme.ExamateTheme
 import ir.kaaveh.sdpcompose.sdp
 import com.omarlkhalil.examate.R
 
@@ -39,8 +39,8 @@ internal fun RTBottomNavigationItem(
     text: Int,
     onClick: () -> Unit,
 ) {
-    val tintColor = if (selected) RTTheme.color.primary400 else RTTheme.color.contentSecondary
-    val textStyle = if (selected) RTTheme.typography.bold14 else RTTheme.typography.medium12
+    val tintColor = if (selected) ExamateTheme.color.primary400 else ExamateTheme.color.contentSecondary
+    val textStyle = if (selected) ExamateTheme.typography.bold14 else ExamateTheme.typography.medium12
     val iconSize = if(selected) 22.sdp else 18.sdp
 
     Column(
@@ -53,7 +53,7 @@ internal fun RTBottomNavigationItem(
             contentDescription = "Bottom Navigation Item Icon",
             tint = tintColor,
         )
-        Spacer(modifier = Modifier.size(RTTheme.dimens.space4))
+        Spacer(modifier = Modifier.size(ExamateTheme.dimens.space4))
         Text(
             text = stringResource(text),
             style = textStyle,
@@ -83,7 +83,7 @@ fun ToolTipItem(
                 text = hintText,
                 maxLines = MAX_LINE,
                 color = Color.White,
-                style = RTTheme.typography.medium14,
+                style = ExamateTheme.typography.medium14,
                 textAlign = TextAlign.Start,
                 modifier = Modifier
                     .padding(DEFAULT_PADDING)

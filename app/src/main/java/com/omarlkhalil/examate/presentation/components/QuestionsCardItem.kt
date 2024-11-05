@@ -16,7 +16,6 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -25,14 +24,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
-import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import com.omarlkhalil.examate.R
 import com.omarlkhalil.examate.domain.model.questions.OralQuestionsModel
 import com.omarlkhalil.examate.domain.model.questions.WritingQuestionsModel
-import com.omarlkhalil.examate.presentation.theme.RTTheme
+import com.omarlkhalil.examate.presentation.theme.ExamateTheme
 import ir.kaaveh.sdpcompose.sdp
 
 
@@ -41,8 +39,8 @@ internal fun OralQuestionsCard(
     questionItem: OralQuestionsModel
 ) {
     ElevatedCard(
-        colors = CardDefaults.cardColors(containerColor = RTTheme.color.white),
-        shape = RTTheme.shapes.large,
+        colors = CardDefaults.cardColors(containerColor = ExamateTheme.color.white),
+        shape = ExamateTheme.shapes.large,
         elevation = CardDefaults.elevatedCardElevation(defaultElevation = 1.sdp),
     ) {
         Column(
@@ -59,7 +57,7 @@ internal fun OralQuestionsCard(
                     Icon(
                         imageVector = Icons.Outlined.MoreVert,
                         contentDescription = "Home",
-                        tint = RTTheme.color.black,
+                        tint = ExamateTheme.color.black,
                         modifier = Modifier
                             .size(24.sdp)
                     )
@@ -67,8 +65,8 @@ internal fun OralQuestionsCard(
             }
             Text(
                 text = questionItem.question,
-                style = RTTheme.typography.medium14,
-                color = RTTheme.color.contentPrimary
+                style = ExamateTheme.typography.medium14,
+                color = ExamateTheme.color.contentPrimary
             )
             Row(
                 verticalAlignment = Alignment.CenterVertically,
@@ -88,8 +86,8 @@ internal fun OralQuestionsCard(
                     )
                     Text(
                         text = "${questionItem.answersCount} answers",
-                        style = RTTheme.typography.medium12,
-                        color = RTTheme.color.primary200
+                        style = ExamateTheme.typography.medium12,
+                        color = ExamateTheme.color.primary200
                     )
                 }
                 Text(
@@ -98,8 +96,8 @@ internal fun OralQuestionsCard(
                     modifier = Modifier
                         .weight(1f)
                         .padding(end = 5.sdp),
-                    style = RTTheme.typography.medium12,
-                    color = RTTheme.color.primary200
+                    style = ExamateTheme.typography.medium12,
+                    color = ExamateTheme.color.primary200
                 )
             }
         }
@@ -112,8 +110,8 @@ internal fun WritingQuestionsCard(
     questionItem: WritingQuestionsModel
 ) {
     ElevatedCard(
-        colors = CardDefaults.cardColors(containerColor = RTTheme.color.white),
-        shape = RTTheme.shapes.large,
+        colors = CardDefaults.cardColors(containerColor = ExamateTheme.color.white),
+        shape = ExamateTheme.shapes.large,
         elevation = CardDefaults.elevatedCardElevation(defaultElevation = 1.sdp),
     ) {
         Column(
@@ -123,17 +121,17 @@ internal fun WritingQuestionsCard(
             verticalArrangement = Arrangement.spacedBy(6.sdp)
         ) {
             Surface(
-                color = RTTheme.color.secondary400,
-                shape = RTTheme.shapes.small,
+                color = ExamateTheme.color.secondary400,
+                shape = ExamateTheme.shapes.small,
                 modifier = Modifier
                     .height(15.sdp)
             ) {
                 Text(
                     text = "${questionItem.answersCount} sur ${questionItem.questionsCount} Questions",
-                    style = RTTheme.typography.medium12,
+                    style = ExamateTheme.typography.medium12,
                     modifier = Modifier.fillMaxSize(),
                     textAlign = TextAlign.Center,
-                    color = RTTheme.color.primary600,
+                    color = ExamateTheme.color.primary600,
                 )
             }
             Row(
@@ -143,22 +141,22 @@ internal fun WritingQuestionsCard(
                 Icon(
                     painter = painterResource(questionItem.icon),
                     contentDescription = "Home",
-                    tint = RTTheme.color.black,
+                    tint = ExamateTheme.color.black,
                     modifier = Modifier
                         .size(18.sdp)
                 )
                 Text(
                     text = questionItem.type,
-                    style = RTTheme.typography.bold16,
+                    style = ExamateTheme.typography.bold16,
                     textAlign = TextAlign.Start,
-                    color = RTTheme.color.primary200,
+                    color = ExamateTheme.color.primary200,
                 )
             }
             Text(
                 text = "Progress ${questionItem.progress.toInt()} %",
-                style = RTTheme.typography.medium12,
+                style = ExamateTheme.typography.medium12,
                 textAlign = TextAlign.Center,
-                color = RTTheme.color.primary200,
+                color = ExamateTheme.color.primary200,
             )
             CustomLinearIndicator(
                 progress = questionItem.progress,
@@ -172,8 +170,8 @@ internal fun WritingQuestionsCard(
 private fun CustomLinearIndicator(
     progress: Float,
     modifier: Modifier = Modifier,
-    trackColor: Color = RTTheme.color.secondary200,
-    progressColor: Color = RTTheme.color.primary400,
+    trackColor: Color = ExamateTheme.color.secondary200,
+    progressColor: Color = ExamateTheme.color.primary400,
     strokeWidth: Dp = 6.sdp,
 ) {
     val normalizedProgress = (progress.coerceIn(0f, 100f)) / 100f
@@ -210,18 +208,18 @@ private fun OralQuestionsTextItem(modifier: Modifier = Modifier, titles: List<St
     ) {
         titles.forEach {
             Surface(
-                color = RTTheme.color.background,
-                shape = RTTheme.shapes.small,
+                color = ExamateTheme.color.background,
+                shape = ExamateTheme.shapes.small,
                 modifier = Modifier
                     .width(60.sdp)
                     .height(15.sdp)
             ) {
                 Text(
                     text = it,
-                    style = RTTheme.typography.medium12,
+                    style = ExamateTheme.typography.medium12,
                     modifier = Modifier.fillMaxSize(),
                     textAlign = TextAlign.Center,
-                    color = RTTheme.color.contentPrimary,
+                    color = ExamateTheme.color.contentPrimary,
                 )
             }
         }

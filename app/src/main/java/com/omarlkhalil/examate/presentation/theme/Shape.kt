@@ -3,7 +3,7 @@ package com.omarlkhalil.examate.presentation.theme
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.ui.unit.dp
 
-data class RTShapes(
+data class ExamateShapes(
     val extraSmall: RoundedCornerShape,
     val small: RoundedCornerShape,
     val medium: RoundedCornerShape,
@@ -11,7 +11,7 @@ data class RTShapes(
     val extraLarge: RoundedCornerShape
 )
 
-val shapes = RTShapes(
+val shapes = ExamateShapes(
     extraSmall = RoundedCornerShape(4.dp),
     small = RoundedCornerShape(8.dp),
     medium = RoundedCornerShape(16.dp),

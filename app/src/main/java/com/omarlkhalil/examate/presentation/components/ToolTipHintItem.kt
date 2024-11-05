@@ -18,7 +18,7 @@ import androidx.compose.ui.layout.LayoutCoordinates
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import co.yml.tooltip.ToolTipView
-import com.omarlkhalil.examate.presentation.theme.RTTheme
+import com.omarlkhalil.examate.presentation.theme.ExamateTheme
 import ir.kaaveh.sdpcompose.sdp
 
 
@@ -33,13 +33,13 @@ internal fun ToolTipHintItem(
     customHintContent: (@Composable (RowScope) -> Unit)? = null,
     customContent: (@Composable () -> Unit)? = null,
 ) {
-    val tintColor = if(isHintVisible.value) RTTheme.color.primary400 else RTTheme.color.contentSecondary
+    val tintColor = if(isHintVisible.value) ExamateTheme.color.primary400 else ExamateTheme.color.contentSecondary
 
     ToolTipView(
         visibleHintCoordinates = visibleHintCoordinates,
         isHintVisible = isHintVisible,
         dismissOnTouchOutside = false,
-        hintBackgroundColor = RTTheme.color.secondary800,
+        hintBackgroundColor = ExamateTheme.color.secondary800,
         modifier = modifier,
         onClick = onClick,
         horizontalPadding = 10.sdp,
@@ -51,7 +51,7 @@ internal fun ToolTipHintItem(
                 Column(
                     modifier = Modifier
                         .padding(top = 5.sdp)
-                        .clip(RTTheme.shapes.large)
+                        .clip(ExamateTheme.shapes.large)
                         .width(60.sdp)
                         .height(70.sdp),
                     horizontalAlignment = CenterHorizontally
@@ -62,10 +62,10 @@ internal fun ToolTipHintItem(
                         contentDescription = stringResource(textRes),
                         tint = tintColor,
                     )
-                    Spacer(modifier = Modifier.size(RTTheme.dimens.space4))
+                    Spacer(modifier = Modifier.size(ExamateTheme.dimens.space4))
                     Text(
                         text = stringResource(textRes),
-                        style = RTTheme.typography.medium14,
+                        style = ExamateTheme.typography.medium14,
                         maxLines = 1,
                         color = tintColor
                     )

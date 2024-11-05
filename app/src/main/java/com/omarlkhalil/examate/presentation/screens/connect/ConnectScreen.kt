@@ -34,7 +34,7 @@ import com.omarlkhalil.examate.domain.model.connections.ConnectItemModel
 import com.omarlkhalil.examate.domain.model.connections.UserModel
 import com.omarlkhalil.examate.presentation.components.ConnectCardItem
 import com.omarlkhalil.examate.presentation.screens.elements.ScreenContainer
-import com.omarlkhalil.examate.presentation.theme.RTTheme
+import com.omarlkhalil.examate.presentation.theme.ExamateTheme
 import ir.kaaveh.sdpcompose.sdp
 
 
@@ -54,12 +54,12 @@ fun Tabs() {
     Column(modifier = Modifier.fillMaxWidth()) {
         TabRow(
             selectedTabIndex = tabIndex,
-            containerColor = RTTheme.color.background,
-            contentColor = RTTheme.color.primary400,
+            containerColor = ExamateTheme.color.background,
+            contentColor = ExamateTheme.color.primary400,
             indicator = { tabPositions ->
                 TabRowDefaults.SecondaryIndicator(
                     Modifier.tabIndicatorOffset(tabPositions[tabIndex]),
-                    color = RTTheme.color.primary400
+                    color = ExamateTheme.color.primary400
                 )
             }
         ) {
@@ -93,14 +93,14 @@ fun Suggestions() {
                     text = "Suggested Study Partners",
                     textAlign = TextAlign.Start,
                     modifier = Modifier.weight(1f),
-                    style = RTTheme.typography.bold18,
-                    color = RTTheme.color.primary600
+                    style = ExamateTheme.typography.bold18,
+                    color = ExamateTheme.color.primary600
                 )
                 IconButton(onClick = { }) {
                     Icon(
                         painter = painterResource(R.drawable.ic_filters),
                         contentDescription = "Home",
-                        tint = RTTheme.color.primary400,
+                        tint = ExamateTheme.color.primary400,
                         modifier = Modifier
                             .size(24.sdp)
                     )

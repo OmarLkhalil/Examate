@@ -21,7 +21,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.omarlkhalil.examate.R
 import com.omarlkhalil.examate.presentation.navigation.Roots
-import com.omarlkhalil.examate.presentation.theme.RTTheme
+import com.omarlkhalil.examate.presentation.theme.ExamateTheme
 import ir.kaaveh.sdpcompose.sdp
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -42,8 +42,8 @@ internal fun BaseTopBar(navController: NavController) {
 
     TopAppBar(
         colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = RTTheme.color.background,
-            titleContentColor = RTTheme.color.primary800,
+            containerColor = ExamateTheme.color.background,
+            titleContentColor = ExamateTheme.color.primary800,
         ),
         title = {
             TopBarTitle(title = title)
@@ -54,7 +54,7 @@ internal fun BaseTopBar(navController: NavController) {
                     Icon(
                         imageVector = Icons.Outlined.Notifications,
                         contentDescription = "Home",
-                        tint = RTTheme.color.primary400,
+                        tint = ExamateTheme.color.primary400,
                         modifier = Modifier
                             .size(24.sdp)
                     )
@@ -70,8 +70,8 @@ internal fun BaseTopBar(navController: NavController) {
 @Composable
 fun TopBarTitle(
     title: Int,
-    textStyle: TextStyle = RTTheme.typography.bold24,
-    textColor: Color = RTTheme.color.primary600,
+    textStyle: TextStyle = ExamateTheme.typography.bold24,
+    textColor: Color = ExamateTheme.color.primary600,
 ) {
     Text(
         text = stringResource(title),

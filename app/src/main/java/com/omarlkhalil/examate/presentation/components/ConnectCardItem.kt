@@ -30,7 +30,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.SubcomposeAsyncImage
 import coil.request.ImageRequest
 import com.omarlkhalil.examate.domain.model.connections.ConnectItemModel
-import com.omarlkhalil.examate.presentation.theme.RTTheme
+import com.omarlkhalil.examate.presentation.theme.ExamateTheme
 import ir.kaaveh.sdpcompose.sdp
 
 @Composable
@@ -38,8 +38,8 @@ internal fun ConnectCardItem(
     itemModel: ConnectItemModel
 ) {
     ElevatedCard(
-        colors = CardDefaults.cardColors(containerColor = RTTheme.color.white),
-        shape = RTTheme.shapes.large,
+        colors = CardDefaults.cardColors(containerColor = ExamateTheme.color.white),
+        shape = ExamateTheme.shapes.large,
         elevation = CardDefaults.elevatedCardElevation(defaultElevation = 2.sdp),
     ) {
         Column(
@@ -97,7 +97,7 @@ private fun ProfilePicture(
         },
         modifier = modifier
             .clip(CircleShape)
-            .background(RTTheme.color.primary600)
+            .background(ExamateTheme.color.primary600)
             .size(size.dp)
     )
 
@@ -119,30 +119,30 @@ private fun BodyTitleItem(
             Text(
                 text = name,
                 textAlign = TextAlign.Start,
-                style = RTTheme.typography.bold18,
-                color = RTTheme.color.primary600
+                style = ExamateTheme.typography.bold18,
+                color = ExamateTheme.color.primary600
             )
             Box(
                 modifier = Modifier
-                    .clip(RTTheme.shapes.medium)
+                    .clip(ExamateTheme.shapes.medium)
                     .width(100.sdp)
                     .height(30.sdp)
                     .padding(2.sdp)
-                    .background(RTTheme.color.primary600),
+                    .background(ExamateTheme.color.primary600),
                 contentAlignment = Center
             ) {
                 Text(
                     text = "Targeting: $target",
-                    style = RTTheme.typography.medium14,
-                    color = RTTheme.color.white,
+                    style = ExamateTheme.typography.medium14,
+                    color = ExamateTheme.color.white,
                 )
             }
         }
         Text(
             text = "Last seen online: Yesterday",
             textAlign = TextAlign.Start,
-            style = RTTheme.typography.medium14,
-            color = RTTheme.color.primary200,
+            style = ExamateTheme.typography.medium14,
+            color = ExamateTheme.color.primary200,
         )
         Row(
             horizontalArrangement = Arrangement.spacedBy(4.sdp),
@@ -150,17 +150,17 @@ private fun BodyTitleItem(
             items.forEach {
                 Box(
                     modifier = Modifier
-                        .clip(RTTheme.shapes.medium)
+                        .clip(ExamateTheme.shapes.medium)
                         .width(55.sdp)
                         .height(20.sdp)
                         .padding(2.sdp)
-                        .background(RTTheme.color.secondary400),
+                        .background(ExamateTheme.color.secondary400),
                     contentAlignment = Center
                 ) {
                     Text(
                         text = it,
-                        style = RTTheme.typography.medium10,
-                        color = RTTheme.color.primary600,
+                        style = ExamateTheme.typography.medium10,
+                        color = ExamateTheme.color.primary600,
                     )
                 }
             }
@@ -178,7 +178,7 @@ private fun ConnectTextItem(icon: ImageVector, title: String) {
         horizontalArrangement = Arrangement.spacedBy(2.sdp)
     ) {
         Icon(imageVector = icon, contentDescription = title, modifier = Modifier.size(16.sdp))
-        Text(text = title, style = RTTheme.typography.medium12, color = RTTheme.color.primary200)
+        Text(text = title, style = ExamateTheme.typography.medium12, color = ExamateTheme.color.primary200)
     }
 }
 

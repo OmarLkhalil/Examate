@@ -16,7 +16,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import com.omarlkhalil.examate.presentation.components.ProgressSteps
-import com.omarlkhalil.examate.presentation.theme.RTTheme
+import com.omarlkhalil.examate.presentation.theme.ExamateTheme
 import com.omarlkhalil.examate.R
 import com.omarlkhalil.examate.presentation.screens.elements.ScreenContainer
 import ir.kaaveh.sdpcompose.sdp
@@ -26,7 +26,7 @@ import ir.kaaveh.sdpcompose.sdp
 @Composable
 fun HomeScreen() {
     ScreenContainer{
-        Column(Modifier.fillMaxSize().background(RTTheme.color.background),
+        Column(Modifier.fillMaxSize().background(ExamateTheme.color.background),
             verticalArrangement = Arrangement.spacedBy(15.sdp),
         ) {
             HelloTextTile("Omar Khalil")
@@ -34,8 +34,8 @@ fun HomeScreen() {
                 text = stringResource(R.string.study_plan),
                 textAlign = TextAlign.Start,
                 modifier = Modifier.padding(start = 12.sdp),
-                style = RTTheme.typography.bold24,
-                color = RTTheme.color.primary600,
+                style = ExamateTheme.typography.bold24,
+                color = ExamateTheme.color.primary600,
             )
             ProgressSteps()
         }
@@ -47,8 +47,8 @@ fun HomeScreen() {
 @Composable
 fun HelloTextTile(
     title: String,
-    textStyle: TextStyle = RTTheme.typography.bold24,
-    textColor: Color = RTTheme.color.primary600,
+    textStyle: TextStyle = ExamateTheme.typography.bold24,
+    textColor: Color = ExamateTheme.color.primary600,
 ) {
     Row(
         modifier = Modifier.fillMaxWidth().padding(start = 12.sdp),
@@ -58,7 +58,7 @@ fun HelloTextTile(
         Text(
             text = stringResource(R.string.hi),
             textAlign = TextAlign.Start,
-            style = RTTheme.typography.medium24,
+            style = ExamateTheme.typography.medium24,
             color = textColor
         )
         Text(

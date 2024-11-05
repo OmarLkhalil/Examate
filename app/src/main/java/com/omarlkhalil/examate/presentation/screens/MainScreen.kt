@@ -26,7 +26,6 @@ import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
@@ -53,14 +52,13 @@ import com.omarlkhalil.examate.presentation.extensions.currentScreenAsState
 import com.omarlkhalil.examate.presentation.extensions.navigateToRootScreen
 import com.omarlkhalil.examate.presentation.navigation.MainGraph
 import com.omarlkhalil.examate.presentation.navigation.Roots
-import com.omarlkhalil.examate.presentation.screens.SharedViewModel.Companion.ORAL_TAB_INDEX
 import com.omarlkhalil.examate.presentation.screens.connect.ConnectScreen
 import com.omarlkhalil.examate.presentation.screens.elements.ScreenContainer
 import com.omarlkhalil.examate.presentation.screens.home.HomeScreen
 import com.omarlkhalil.examate.presentation.screens.questions.QuestionScreenHintState
 import com.omarlkhalil.examate.presentation.screens.questions.QuestionsScreen
 import com.omarlkhalil.examate.presentation.screens.splash.SplashScreen
-import com.omarlkhalil.examate.presentation.theme.RTTheme
+import com.omarlkhalil.examate.presentation.theme.ExamateTheme
 import kotlin.math.roundToInt
 
 val bottomBarHeight = 80.dp
@@ -78,7 +76,7 @@ internal fun MainScreen(
     val bottomBarHeightPx = with(LocalDensity.current) { bottomBarHeight.roundToPx().toFloat() }
     val bottomBarOffsetHeightPx = remember { mutableFloatStateOf(0f) }
 
-    val bottomBarColor = RTTheme.color.white
+    val bottomBarColor = ExamateTheme.color.white
     val currentRoute = currentScreen.route
 
     val nestedScrollConnection = remember {
@@ -92,23 +90,10 @@ internal fun MainScreen(
         }
     }
     val bottomNavModifier =
-        if (currentRoute == Roots.Home.route) {
             Modifier
-                .height(bottomBarHeight)
                 .background(color = bottomBarColor)
                 .fillMaxWidth()
-                .offset {
-                    IntOffset(
-                        x = 0,
-                        y = -bottomBarOffsetHeightPx.floatValue.roundToInt()
-                    )
-                }
-        } else {
-            Modifier
-                .height(bottomBarHeight)
-                .background(color = bottomBarColor)
-                .fillMaxWidth()
-        }
+
 
     val isTutorialActive by sharedViewModel.isTutorialActive.collectAsState()
     val visibleHintCoordinates: MutableState<LayoutCoordinates?> = remember { mutableStateOf(null) }
@@ -132,7 +117,7 @@ internal fun MainScreen(
                 mainContent = {
                     Scaffold(
                         modifier = modifier.nestedScroll(nestedScrollConnection),
-                        containerColor = RTTheme.color.background,
+                        containerColor = ExamateTheme.color.background,
                         topBar = {
                             BaseTopBar(navController)
                         },
@@ -183,7 +168,7 @@ internal fun MainScreen(
     } else {
         Scaffold(
             modifier = modifier.nestedScroll(nestedScrollConnection),
-            containerColor = RTTheme.color.background,
+            containerColor = ExamateTheme.color.background,
             topBar = {
                 BaseTopBar(navController)
             },
@@ -202,7 +187,7 @@ internal fun MainScreen(
                         navController = navController,
                         currentSelectedScreen = currentScreen,
                         modifier = Modifier.fillMaxWidth(),
-                        containerColor = RTTheme.color.white
+                        containerColor = ExamateTheme.color.white
                     )
                 }
             }
@@ -260,7 +245,7 @@ private fun RTBottomNavigation(
     navController: NavController,
     currentSelectedScreen: Roots,
     modifier: Modifier = Modifier,
-    containerColor: Color = RTTheme.color.white,
+    containerColor: Color = ExamateTheme.color.white,
 ) {
     NavigationBar(
         modifier = modifier,
@@ -309,7 +294,7 @@ private fun RTBottomNavigation(
 @Composable
 private fun RTBottomNavigationToolTip(
     modifier: Modifier = Modifier,
-    containerColor: Color = RTTheme.color.white,
+    containerColor: Color = ExamateTheme.color.white,
     onUpdateSelectedIndex: (Int) -> Unit,
     mainHintState: MainHintState,
     viewModel: SharedViewModel,

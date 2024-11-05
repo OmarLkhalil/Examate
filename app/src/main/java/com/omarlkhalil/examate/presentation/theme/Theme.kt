@@ -7,7 +7,7 @@ import androidx.compose.runtime.staticCompositionLocalOf
 
 private val localColorScheme = staticCompositionLocalOf { rtThemeColors }
 private val localDimens = staticCompositionLocalOf { Dimens() }
-private val localTypography = staticCompositionLocalOf { rtTypography }
+private val localTypography = staticCompositionLocalOf { examateTypGraphy }
 private val localShapes = staticCompositionLocalOf { shapes }
 
 
@@ -18,14 +18,14 @@ fun RTScreenTheme(
     CompositionLocalProvider(
         localColorScheme provides rtThemeColors,
         localDimens provides Dimens(),
-        localTypography provides rtTypography,
+        localTypography provides examateTypGraphy,
         localShapes provides shapes
     ) {
         content()
     }
 }
 
-object RTTheme {
+object ExamateTheme {
 
     val color: RTColor
         @Composable
@@ -36,12 +36,12 @@ object RTTheme {
         @ReadOnlyComposable
         get() = localDimens.current
 
-    val typography: RTTypography
+    val typography: ExamateTypGraphy
         @Composable
         @ReadOnlyComposable
         get() = localTypography.current
 
-    val shapes: RTShapes
+    val shapes: ExamateShapes
         @Composable
         @ReadOnlyComposable
         get() = localShapes.current

@@ -63,7 +63,7 @@ import com.omarlkhalil.examate.presentation.components.ToolTipItem
 import com.omarlkhalil.examate.presentation.components.WritingQuestionsCard
 import com.omarlkhalil.examate.presentation.screens.SharedViewModel
 import com.omarlkhalil.examate.presentation.screens.elements.ScreenContainer
-import com.omarlkhalil.examate.presentation.theme.RTTheme
+import com.omarlkhalil.examate.presentation.theme.ExamateTheme
 import ir.kaaveh.sdpcompose.sdp
 
 
@@ -95,12 +95,12 @@ internal fun QuestionsTabs(
         TabRow(
             modifier = Modifier.width(240.sdp),
             selectedTabIndex = tabIndex,
-            containerColor = RTTheme.color.background,
-            contentColor = RTTheme.color.primary400,
+            containerColor = ExamateTheme.color.background,
+            contentColor = ExamateTheme.color.primary400,
             indicator = { tabPositions ->
                 TabRowDefaults.SecondaryIndicator(
                     Modifier.tabIndicatorOffset(tabPositions[tabIndex]),
-                    color = RTTheme.color.primary400
+                    color = ExamateTheme.color.primary400
                 )
             }
         ) {
@@ -114,21 +114,21 @@ internal fun QuestionsTabs(
                             Icon(
                                 painter = painterResource(R.drawable.ic_writing),
                                 modifier = Modifier.size(18.sdp),
-                                tint = RTTheme.color.primary400,
+                                tint = ExamateTheme.color.primary400,
                                 contentDescription = ""
                             )
                         } else {
                             Icon(
                                 painter = painterResource(R.drawable.ic_oral),
                                 modifier = Modifier.size(18.sdp),
-                                tint = RTTheme.color.primary400,
+                                tint = ExamateTheme.color.primary400,
                                 contentDescription = ""
                             )
                         }
                         Text(
                             title,
-                            style = RTTheme.typography.bold16,
-                            color = RTTheme.color.primary400
+                            style = ExamateTheme.typography.bold16,
+                            color = ExamateTheme.color.primary400
                         )
                     }
                 },
@@ -176,23 +176,23 @@ internal fun Oral(
                     customContent = {
                         Row(
                             modifier = Modifier
-                                .clip(RTTheme.shapes.small)
+                                .clip(ExamateTheme.shapes.small)
                                 .width(100.sdp)
                                 .height(40.sdp)
-                                .background(RTTheme.color.secondary400),
+                                .background(ExamateTheme.color.secondary400),
                             verticalAlignment = CenterVertically,
                             horizontalArrangement = Arrangement.Center
                         ) {
                             Text(
                                 text = "Filter",
                                 textAlign = TextAlign.Start,
-                                style = RTTheme.typography.bold16,
-                                color = RTTheme.color.primary600
+                                style = ExamateTheme.typography.bold16,
+                                color = ExamateTheme.color.primary600
                             )
                             Icon(
                                 painter = painterResource(R.drawable.ic_filters),
                                 contentDescription = "Filter",
-                                tint = RTTheme.color.primary400,
+                                tint = ExamateTheme.color.primary400,
                                 modifier = Modifier.size(20.sdp)
                             )
                         }
@@ -221,23 +221,23 @@ internal fun Oral(
                 // Default display without the hint
                 Row(
                     modifier = Modifier
-                        .clip(RTTheme.shapes.small)
+                        .clip(ExamateTheme.shapes.small)
                         .width(100.sdp)
                         .height(40.sdp)
-                        .background(RTTheme.color.secondary400),
+                        .background(ExamateTheme.color.secondary400),
                     verticalAlignment = CenterVertically,
                     horizontalArrangement = Arrangement.Center
                 ) {
                     Text(
                         text = "Filter",
                         textAlign = TextAlign.Start,
-                        style = RTTheme.typography.bold16,
-                        color = RTTheme.color.primary600
+                        style = ExamateTheme.typography.bold16,
+                        color = ExamateTheme.color.primary600
                     )
                     Icon(
                         painter = painterResource(R.drawable.ic_filters),
                         contentDescription = "Filter",
-                        tint = RTTheme.color.primary400,
+                        tint = ExamateTheme.color.primary400,
                         modifier = Modifier.size(20.sdp)
                     )
                 }
@@ -358,13 +358,13 @@ internal fun CustomTab(
     Box(
         modifier = modifier
             .clip(CircleShape)
-            .background(RTTheme.color.secondary400)
+            .background(ExamateTheme.color.secondary400)
             .height(intrinsicSize = IntrinsicSize.Min),
     ) {
         MyTabIndicator(
             indicatorWidth = tabWidth,
             indicatorOffset = indicatorOffset,
-            indicatorColor = RTTheme.color.primary600,
+            indicatorColor = ExamateTheme.color.primary600,
         )
         Row(
             horizontalArrangement = Arrangement.Center,
