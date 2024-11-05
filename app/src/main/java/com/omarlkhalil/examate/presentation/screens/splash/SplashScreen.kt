@@ -16,6 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.omarlkhalil.examate.R
 import com.omarlkhalil.examate.presentation.screens.elements.VSpacer
@@ -40,10 +41,9 @@ fun SplashScreen(
                 detectTapGestures { isOut = true }
             }
     ) {
-
         LaunchedEffect(isOut) {
             if (!isOut) {
-                delay((1.5).seconds)
+                delay((2).seconds)
                 isOut = true
             } else {
                 navigateOut()
@@ -59,6 +59,7 @@ fun SplashScreen(
             modifier = modifier,
             text = stringResource(id = R.string.splash_welcome),
             style = RTTheme.typography.medium18,
+            textAlign = TextAlign.Center,
             color = RTTheme.color.white
         )
         VSpacer(height = 24.sdp)
@@ -66,6 +67,7 @@ fun SplashScreen(
             modifier = modifier,
             text = stringResource(id = R.string.splash_onboarding),
             style = RTTheme.typography.medium24,
+            textAlign = TextAlign.Center,
             color = RTTheme.color.blue
         )
     }
