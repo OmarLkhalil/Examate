@@ -1,8 +1,12 @@
 package com.omarlkhalil.examate.presentation.navigation
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -18,11 +22,24 @@ import com.omarlkhalil.examate.presentation.screens.home.HomeScreen
 import com.omarlkhalil.examate.presentation.screens.questions.QuestionScreenHintState
 import com.omarlkhalil.examate.presentation.screens.questions.QuestionsScreen
 import com.omarlkhalil.examate.presentation.screens.splash.SplashScreen
+import com.omarlkhalil.examate.presentation.theme.RTTheme
 
 
 @Composable
 internal fun MainGraph(navController: NavHostController, startDestination: String) {
-    NavHost(navController = navController, startDestination =startDestination) {
+
+    val graphModifier = Modifier
+        .fillMaxWidth()
+        .background(RTTheme.color.white)
+        .statusBarsPadding()
+        .imePadding()
+
+
+    NavHost(
+        navController = navController,
+        startDestination = startDestination,
+        modifier = graphModifier
+    ) {
         homeScreen(navController)
         connectScreen(navController)
         questionsScreen(navController)

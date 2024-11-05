@@ -20,9 +20,6 @@ class SharedViewModel @Inject constructor(
     private val setFirstTimeLaunchUseCase: SetFirstTimeLaunchUseCase
 ) : ViewModel() {
 
-    private val _currentTutorialStep = MutableStateFlow(0)
-    val currentTutorialStep = _currentTutorialStep.asStateFlow()
-
     private val _isTutorialActive = MutableStateFlow(false)
     val isTutorialActive = _isTutorialActive.asStateFlow()
 
@@ -31,7 +28,6 @@ class SharedViewModel @Inject constructor(
             getFirstTimeLaunchUseCase().collectLatest { isFirstTime ->
                 if (isFirstTime) {
                     _isTutorialActive.emit(true)
-                    _currentTutorialStep.emit(1)
                 }
             }
         }

@@ -69,13 +69,13 @@ import ir.kaaveh.sdpcompose.sdp
 
 @Composable
 internal fun QuestionsScreen(
-    questionScreenHintState: QuestionScreenHintState,
+    questionState: QuestionScreenHintState,
     viewModel: SharedViewModel = hiltViewModel()
 ) {
     val visibleHintCoordinates = remember {mutableStateOf(viewModel.visibleHintCoordinates.value)}
     ScreenContainer{
         QuestionsTabs(
-            questionScreenHintState,
+            questionState,
             visibleHintCoordinates,
             viewModel
         )
@@ -84,7 +84,7 @@ internal fun QuestionsScreen(
 
 @Composable
 internal fun QuestionsTabs(
-    questionScreenHintState: QuestionScreenHintState,
+    questionState: QuestionScreenHintState,
     visibleHintCoordinates: MutableState<LayoutCoordinates?>,
     viewModel: SharedViewModel
 ) {
@@ -139,12 +139,12 @@ internal fun QuestionsTabs(
         }
         when (tabIndex) {
             0 -> Writing(
-                questionScreenHintState,
+                questionState,
                 visibleHintCoordinates
             )
 
             1 -> Oral(
-                questionScreenHintState,
+                questionState,
                 visibleHintCoordinates,
                 viewModel
             )
@@ -201,6 +201,9 @@ internal fun Oral(
                         ToolTipItem(
                             hintText = stringResource(R.string.hint),
                             isHintVisible = questionsState.isFilterHintVisible,
+                            onCloseClick = {
+                                viewModel.endTutorial()
+                            },
                             onNextClick = {
                                 questionsState.isFilterHintVisible.value =
                                     !questionsState.isFilterHintVisible.value
@@ -315,6 +318,9 @@ private fun QuestionsGridList(
                         ToolTipItem(
                             hintText = stringResource(R.string.hint),
                             isHintVisible = questionScreenHintState.isFirstItemHintVisible,
+                            onCloseClick = {
+                                viewModel.endTutorial()
+                            },
                             onNextClick = {
                                 questionScreenHintState.isFirstItemHintVisible.value =
                                     !questionScreenHintState.isFirstItemHintVisible.value

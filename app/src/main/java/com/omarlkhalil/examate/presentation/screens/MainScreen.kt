@@ -111,8 +111,6 @@ internal fun MainScreen(
         }
 
     val isTutorialActive by sharedViewModel.isTutorialActive.collectAsState()
-    val currentStep by sharedViewModel.currentTutorialStep.collectAsState()
-
     val visibleHintCoordinates: MutableState<LayoutCoordinates?> = remember { mutableStateOf(null) }
     val isHintVisibleHome = remember { mutableStateOf(true) }
     val isHintVisibleConnect = remember { mutableStateOf(false) }
@@ -123,10 +121,10 @@ internal fun MainScreen(
     val isFilterHintVisible = remember { mutableStateOf(false) }
     val selectedIndex by sharedViewModel.selectedIndex.collectAsState()
 
-    var isSplashFinished by remember {mutableStateOf(false)}
-    SplashScreen{ isSplashFinished = true }
+    var isSplashFinished by remember { mutableStateOf(false) }
+    SplashScreen { isSplashFinished = true }
     if (isTutorialActive) {
-        if(isSplashFinished){
+        if (isSplashFinished) {
             ToolTipScreen(
                 paddingHighlightArea = 0f,
                 backgroundTransparency = 0.7f,
@@ -145,13 +143,15 @@ internal fun MainScreen(
                                 onUpdateSelectedIndex = {
                                     sharedViewModel.updateSelectedIndex(it)
                                 },
-                                visibleHintCoordinates = visibleHintCoordinates,
-                                isHintVisibleHome = isHintVisibleHome,
-                                isHintVisibleConnect = isHintVisibleConnect,
-                                isHintVisibleQuestions = isHintVisibleQuestions,
-                                isHintVisibleTools = isHintVisibleTools,
-                                isFirstItemHintVisible = isFirstItemHintVisible,
-                                isHintVisibleProfile = isHintVisibleProfile,
+                                mainHintState = MainHintState(
+                                    visibleHintCoordinates = visibleHintCoordinates,
+                                    isHintVisibleProfile = isHintVisibleProfile,
+                                    isHintVisibleHome = isHintVisibleHome,
+                                    isHintVisibleConnect = isHintVisibleConnect,
+                                    isHintVisibleQuestions = isHintVisibleQuestions,
+                                    isHintVisibleTools = isHintVisibleTools,
+                                    isFirstItemHintVisible = isFirstItemHintVisible,
+                                ),
                                 viewModel = sharedViewModel
                             )
                         }, content = {
@@ -311,23 +311,17 @@ private fun RTBottomNavigationToolTip(
     modifier: Modifier = Modifier,
     containerColor: Color = RTTheme.color.white,
     onUpdateSelectedIndex: (Int) -> Unit,
-    visibleHintCoordinates: MutableState<LayoutCoordinates?>,
-    isHintVisibleHome: MutableState<Boolean>,
-    isHintVisibleConnect: MutableState<Boolean>,
-    isHintVisibleQuestions: MutableState<Boolean>,
-    isHintVisibleTools: MutableState<Boolean>,
-    isHintVisibleProfile: MutableState<Boolean>,
-    isFirstItemHintVisible: MutableState<Boolean>,
+    mainHintState: MainHintState,
     viewModel: SharedViewModel,
 ) {
 
     fun resetHints() {
-        isHintVisibleHome.value = false
-        isHintVisibleConnect.value = false
-        isHintVisibleQuestions.value = false
-        isHintVisibleTools.value = false
-        isHintVisibleProfile.value = false
-        isFirstItemHintVisible.value = false
+        mainHintState.isHintVisibleHome.value = false
+        mainHintState.isHintVisibleConnect.value = false
+        mainHintState.isHintVisibleQuestions.value = false
+        mainHintState.isHintVisibleTools.value = false
+        mainHintState.isHintVisibleProfile.value = false
+        mainHintState.isFirstItemHintVisible.value = false
     }
 
     NavigationBar(
@@ -338,22 +332,22 @@ private fun RTBottomNavigationToolTip(
         ToolTipHintItem(
             iconRes = R.drawable.ic_nav_home,
             textRes = R.string.home,
-            isHintVisible = isHintVisibleHome,
-            visibleHintCoordinates = visibleHintCoordinates,
+            isHintVisible = mainHintState.isHintVisibleHome,
+            visibleHintCoordinates = mainHintState.visibleHintCoordinates,
             onClick = {
                 resetHints()
-                isHintVisibleHome.value = true
+                mainHintState.isHintVisibleHome.value = true
                 onUpdateSelectedIndex(0)
             },
             customHintContent = {
                 ToolTipItem(
                     hintText = "Vous trouverez ici votre plan d'étude",
-                    isHintVisible = isHintVisibleHome,
+                    isHintVisible = mainHintState.isHintVisibleHome,
                     onCloseClick = { viewModel.endTutorial() },
                     onNextClick = {
                         resetHints()
                         Handler(Looper.getMainLooper()).postDelayed({
-                            isHintVisibleConnect.value = true
+                            mainHintState.isHintVisibleConnect.value = true
                         }, 1000)
                         onUpdateSelectedIndex(1)
                     },
@@ -365,22 +359,22 @@ private fun RTBottomNavigationToolTip(
         ToolTipHintItem(
             iconRes = R.drawable.ic_nav_connecters,
             textRes = R.string.connect,
-            isHintVisible = isHintVisibleConnect,
-            visibleHintCoordinates = visibleHintCoordinates,
+            isHintVisible = mainHintState.isHintVisibleConnect,
+            visibleHintCoordinates = mainHintState.visibleHintCoordinates,
             onClick = {
                 resetHints()
-                isHintVisibleConnect.value = true
+                mainHintState.isHintVisibleConnect.value = true
                 onUpdateSelectedIndex(1)
             },
             customHintContent = {
                 ToolTipItem(
                     hintText = "Vous trouverez ici des partenaires d'étude et des personnes avec qui vous connecter",
-                    isHintVisible = isHintVisibleConnect,
+                    isHintVisible = mainHintState.isHintVisibleConnect,
                     onCloseClick = { viewModel.endTutorial() },
                     onNextClick = {
                         resetHints()
                         Handler(Looper.getMainLooper()).postDelayed({
-                            isHintVisibleQuestions.value = true
+                            mainHintState.isHintVisibleQuestions.value = true
                         }, 1000)
                         onUpdateSelectedIndex(2)
                     },
@@ -392,25 +386,25 @@ private fun RTBottomNavigationToolTip(
         ToolTipHintItem(
             iconRes = R.drawable.ic_nav_questions,
             textRes = R.string.questions,
-            isHintVisible = isHintVisibleQuestions,
-            visibleHintCoordinates = visibleHintCoordinates,
+            isHintVisible = mainHintState.isHintVisibleQuestions,
+            visibleHintCoordinates = mainHintState.visibleHintCoordinates,
             onClick = {
                 resetHints()
                 viewModel.setTabsIndex(0)
-                isHintVisibleQuestions.value = true
+                mainHintState.isHintVisibleQuestions.value = true
                 onUpdateSelectedIndex(2)
             },
             customHintContent = {
                 ToolTipItem(
                     hintText = "Voici les questions avec des réponses modèles",
-                    isHintVisible = isHintVisibleQuestions,
+                    isHintVisible = mainHintState.isHintVisibleQuestions,
                     onCloseClick = { viewModel.endTutorial() },
                     onNextClick = {
                         resetHints()
                         Handler(Looper.getMainLooper()).post {
                             viewModel.setTabsIndex(0)
                             onUpdateSelectedIndex(2)
-                            isFirstItemHintVisible.value = true
+                            mainHintState.isFirstItemHintVisible.value = true
                         }
                     },
                     icon = R.drawable.ic_nav_questions
@@ -421,22 +415,22 @@ private fun RTBottomNavigationToolTip(
         ToolTipHintItem(
             iconRes = R.drawable.ic_nav_tools,
             textRes = R.string.tools,
-            isHintVisible = isHintVisibleTools,
-            visibleHintCoordinates = visibleHintCoordinates,
+            isHintVisible = mainHintState.isHintVisibleTools,
+            visibleHintCoordinates = mainHintState.visibleHintCoordinates,
             onClick = {
                 resetHints()
-                isHintVisibleTools.value = true
+                mainHintState.isHintVisibleTools.value = true
                 onUpdateSelectedIndex(3)
             },
             customHintContent = {
                 ToolTipItem(
                     hintText = stringResource(R.string.hint),
-                    isHintVisible = isHintVisibleTools,
+                    isHintVisible = mainHintState.isHintVisibleTools,
                     onCloseClick = { viewModel.endTutorial() },
                     onNextClick = {
                         resetHints()
                         Handler(Looper.getMainLooper()).postDelayed({
-                            isHintVisibleProfile.value = true
+                            mainHintState.isHintVisibleProfile.value = true
                         }, 1000)
                         onUpdateSelectedIndex(4)
                     },
@@ -448,17 +442,17 @@ private fun RTBottomNavigationToolTip(
         ToolTipHintItem(
             iconRes = R.drawable.ic_nav_profile,
             textRes = R.string.profile,
-            isHintVisible = isHintVisibleProfile,
-            visibleHintCoordinates = visibleHintCoordinates,
+            isHintVisible = mainHintState.isHintVisibleProfile,
+            visibleHintCoordinates = mainHintState.visibleHintCoordinates,
             onClick = {
                 resetHints()
-                isHintVisibleProfile.value = true
+                mainHintState.isHintVisibleProfile.value = true
                 onUpdateSelectedIndex(4)
             },
             customHintContent = {
                 ToolTipItem(
                     hintText = stringResource(R.string.hint),
-                    isHintVisible = isHintVisibleProfile,
+                    isHintVisible = mainHintState.isHintVisibleProfile,
                     onCloseClick = { viewModel.endTutorial() },
                     icon = R.drawable.ic_nav_profile
                 )
