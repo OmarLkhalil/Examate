@@ -134,7 +134,7 @@ internal fun ProgressSteps() {
         modifier = Modifier
             .fillMaxWidth()
             .background(ExamateTheme.color.background)
-            .padding(10.sdp),
+            .padding(top = 10.sdp, start =10.sdp, end = 10.sdp, bottom = 0.sdp),
         horizontalAlignment = Alignment.Start
     ) {
         itemsIndexed(listItem) { index, item ->

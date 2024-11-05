@@ -72,13 +72,9 @@ internal fun QuestionsScreen(
     questionState: QuestionScreenHintState,
     viewModel: SharedViewModel = hiltViewModel()
 ) {
-    val visibleHintCoordinates = remember {mutableStateOf(viewModel.visibleHintCoordinates.value)}
-    ScreenContainer{
-        QuestionsTabs(
-            questionState,
-            visibleHintCoordinates,
-            viewModel
-        )
+    val visibleHintCoordinates = remember { mutableStateOf(viewModel.visibleHintCoordinates.value) }
+    ScreenContainer {
+        QuestionsTabs(questionState, visibleHintCoordinates, viewModel)
     }
 }
 
@@ -208,10 +204,10 @@ internal fun Oral(
                                 questionsState.isFilterHintVisible.value =
                                     !questionsState.isFilterHintVisible.value
                                 viewModel.updateSelectedIndex(3)
-                                Handler(Looper.getMainLooper()).postDelayed({
+                                Handler(Looper.getMainLooper()).post{
                                     questionsState.isToolsHintVisible.value =
                                         !questionsState.isToolsHintVisible.value
-                                }, 1000)
+                                }
                             },
                             icon = R.drawable.ic_filters
                         )
@@ -328,7 +324,7 @@ private fun QuestionsGridList(
                                     viewModel.setTabsIndex(1)
                                     questionScreenHintState.isFilterHintVisible.value =
                                         !questionScreenHintState.isFilterHintVisible.value
-                                }, 1000)
+                                }, 500)
                             },
                             icon = R.drawable.ic_filters
                         )
@@ -426,18 +422,10 @@ private fun MyTabIndicator(
     Box(
         modifier = Modifier
             .fillMaxHeight()
-            .width(
-                width = indicatorWidth,
-            )
-            .offset(
-                x = indicatorOffset,
-            )
-            .clip(
-                shape = CircleShape,
-            )
-            .background(
-                color = indicatorColor,
-            ),
+            .width(width = indicatorWidth)
+            .offset(x = indicatorOffset)
+            .clip(shape = CircleShape)
+            .background(color = indicatorColor),
     )
 }
 

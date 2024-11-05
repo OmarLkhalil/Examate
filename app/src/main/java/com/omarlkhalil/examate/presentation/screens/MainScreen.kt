@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.NavigationBar
@@ -21,11 +20,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
@@ -36,7 +34,6 @@ import androidx.compose.ui.layout.LayoutCoordinates
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -59,9 +56,8 @@ import com.omarlkhalil.examate.presentation.screens.questions.QuestionScreenHint
 import com.omarlkhalil.examate.presentation.screens.questions.QuestionsScreen
 import com.omarlkhalil.examate.presentation.screens.splash.SplashScreen
 import com.omarlkhalil.examate.presentation.theme.ExamateTheme
-import kotlin.math.roundToInt
 
-val bottomBarHeight = 80.dp
+val bottomBarHeight = 90.dp
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -91,6 +87,7 @@ internal fun MainScreen(
     }
     val bottomNavModifier =
             Modifier
+                .height(bottomBarHeight)
                 .background(color = bottomBarColor)
                 .fillMaxWidth()
 
@@ -107,8 +104,8 @@ internal fun MainScreen(
     val selectedIndex by sharedViewModel.selectedIndex.collectAsState()
 
     var isSplashFinished by remember { mutableStateOf(false) }
-    SplashScreen { isSplashFinished = true }
     if (isTutorialActive) {
+        SplashScreen { isSplashFinished = true }
         if (isSplashFinished) {
             ToolTipScreen(
                 paddingHighlightArea = 0f,
@@ -186,8 +183,7 @@ internal fun MainScreen(
                     RTBottomNavigation(
                         navController = navController,
                         currentSelectedScreen = currentScreen,
-                        modifier = Modifier.fillMaxWidth(),
-                        containerColor = ExamateTheme.color.white
+                        containerColor = bottomBarColor
                     )
                 }
             }

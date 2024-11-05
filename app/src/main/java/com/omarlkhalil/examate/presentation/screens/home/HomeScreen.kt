@@ -1,6 +1,5 @@
 package com.omarlkhalil.examate.presentation.screens.home
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -26,7 +25,7 @@ import ir.kaaveh.sdpcompose.sdp
 @Composable
 fun HomeScreen() {
     ScreenContainer{
-        Column(Modifier.fillMaxSize().background(ExamateTheme.color.background),
+        Column(Modifier.fillMaxWidth(),
             verticalArrangement = Arrangement.spacedBy(15.sdp),
         ) {
             HelloTextTile("Omar Khalil")

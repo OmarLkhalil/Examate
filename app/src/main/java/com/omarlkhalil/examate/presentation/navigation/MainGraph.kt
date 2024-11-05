@@ -27,7 +27,6 @@ internal fun MainGraph(navController: NavHostController, startDestination: Strin
 
     val graphModifier = Modifier
         .fillMaxSize()
-        .background(ExamateTheme.color.background)
         .imePadding()
 
 
