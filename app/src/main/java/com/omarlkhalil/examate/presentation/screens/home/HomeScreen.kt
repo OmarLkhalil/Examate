@@ -23,23 +23,21 @@ import ir.kaaveh.sdpcompose.sdp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen() {
-    ScreenContainer{
-        Column(Modifier.fillMaxWidth(),
-            verticalArrangement = Arrangement.spacedBy(15.sdp),
-        ) {
-            HelloTextTile("Omar Khalil")
-            Text(
-                text = stringResource(R.string.study_plan),
-                textAlign = TextAlign.Start,
-                modifier = Modifier.padding(start = 12.sdp),
-                style = ExamateTheme.typography.bold24,
-                color = ExamateTheme.color.primary600,
-            )
-            ProgressSteps()
-        }
+fun HomeScreen() = ScreenContainer {
+    Column(
+        Modifier.fillMaxWidth(),
+        verticalArrangement = Arrangement.spacedBy(15.sdp),
+    ) {
+        HelloTextTile("Omar Khalil")
+        Text(
+            text = stringResource(R.string.study_plan),
+            textAlign = TextAlign.Start,
+            modifier = Modifier.padding(start = 12.sdp),
+            style = ExamateTheme.typography.bold24,
+            color = ExamateTheme.color.primary600,
+        )
+        ProgressSteps()
     }
-
 }
 
 
@@ -50,10 +48,12 @@ fun HelloTextTile(
     textColor: Color = ExamateTheme.color.primary600,
 ) {
     Row(
-        modifier = Modifier.fillMaxWidth().padding(start = 12.sdp),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(start = 12.sdp),
         verticalAlignment = androidx.compose.ui.Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(3.sdp)
-    ){
+    ) {
         Text(
             text = stringResource(R.string.hi),
             textAlign = TextAlign.Start,

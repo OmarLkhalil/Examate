@@ -1,7 +1,9 @@
 package com.omarlkhalil.examate.presentation.screens
 
+import android.content.ContentValues.TAG
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.slideInVertically
@@ -36,6 +38,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.Lifecycle
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import co.yml.tooltip.ui.ToolTipScreen
@@ -50,6 +53,7 @@ import com.omarlkhalil.examate.presentation.extensions.navigateToRootScreen
 import com.omarlkhalil.examate.presentation.navigation.MainGraph
 import com.omarlkhalil.examate.presentation.navigation.Roots
 import com.omarlkhalil.examate.presentation.screens.connect.ConnectScreen
+import com.omarlkhalil.examate.presentation.screens.elements.ComposableLifecycle
 import com.omarlkhalil.examate.presentation.screens.elements.ScreenContainer
 import com.omarlkhalil.examate.presentation.screens.home.HomeScreen
 import com.omarlkhalil.examate.presentation.screens.questions.QuestionScreenHintState
@@ -102,6 +106,30 @@ internal fun MainScreen(
     val isHintVisibleProfile = remember { mutableStateOf(false) }
     val isFilterHintVisible = remember { mutableStateOf(false) }
     val selectedIndex by sharedViewModel.selectedIndex.collectAsState()
+
+    ComposableLifecycle{ _, event ->
+        when (event) {
+            Lifecycle.Event.ON_CREATE -> {
+                Log.d(TAG, "onCreate")
+            }
+            Lifecycle.Event.ON_START -> {
+                Log.d(TAG, "On Start")
+            }
+            Lifecycle.Event.ON_RESUME -> {
+                Log.d(TAG, "On Resume")
+            }
+            Lifecycle.Event.ON_PAUSE -> {
+                Log.d(TAG, "On Pause")
+            }
+            Lifecycle.Event.ON_STOP -> {
+                Log.d(TAG, "On Stop")
+            }
+            Lifecycle.Event.ON_DESTROY -> {
+                Log.d(TAG, "On Destroy")
+            }
+            else -> {}
+        }
+    }
 
     var isSplashFinished by remember { mutableStateOf(false) }
     if (isTutorialActive) {

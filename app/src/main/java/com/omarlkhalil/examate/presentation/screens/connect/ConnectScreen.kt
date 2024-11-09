@@ -1,5 +1,7 @@
 package com.omarlkhalil.examate.presentation.screens.connect
 
+import android.content.ContentValues.TAG
+import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -29,20 +31,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.lifecycle.Lifecycle
 import com.omarlkhalil.examate.R
 import com.omarlkhalil.examate.domain.model.connections.ConnectItemModel
 import com.omarlkhalil.examate.domain.model.connections.UserModel
 import com.omarlkhalil.examate.presentation.components.ConnectCardItem
+import com.omarlkhalil.examate.presentation.screens.elements.ComposableLifecycle
 import com.omarlkhalil.examate.presentation.screens.elements.ScreenContainer
 import com.omarlkhalil.examate.presentation.theme.ExamateTheme
 import ir.kaaveh.sdpcompose.sdp
 
 
 @Composable
-fun ConnectScreen() {
-    ScreenContainer{
-        Tabs()
-    }
+fun ConnectScreen() = ScreenContainer {
+    Tabs()
 }
 
 @Composable
@@ -80,6 +82,7 @@ fun Tabs() {
 
 @Composable
 fun Suggestions() {
+
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = androidx.compose.foundation.layout.Arrangement.spacedBy(10.sdp),

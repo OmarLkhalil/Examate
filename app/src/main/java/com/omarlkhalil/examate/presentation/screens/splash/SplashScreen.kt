@@ -19,6 +19,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.omarlkhalil.examate.R
+import com.omarlkhalil.examate.presentation.screens.elements.ScreenContainer
 import com.omarlkhalil.examate.presentation.screens.elements.VSpacer
 import com.omarlkhalil.examate.presentation.theme.ExamateTheme
 import ir.kaaveh.sdpcompose.sdp
@@ -29,7 +30,7 @@ import kotlin.time.Duration.Companion.seconds
 @Composable
 fun SplashScreen(
     navigateOut: () -> Unit
-) {
+) = ScreenContainer {
 
     var isOut by remember { mutableStateOf(false) }
 
@@ -43,7 +44,7 @@ fun SplashScreen(
     ) {
         LaunchedEffect(isOut) {
             if (!isOut) {
-                delay((2).seconds)
+                delay((3).seconds)
                 isOut = true
             } else {
                 navigateOut()

@@ -1,6 +1,5 @@
 package com.omarlkhalil.examate.presentation.navigation
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.imePadding
@@ -19,7 +18,6 @@ import com.omarlkhalil.examate.presentation.screens.home.HomeScreen
 import com.omarlkhalil.examate.presentation.screens.questions.QuestionScreenHintState
 import com.omarlkhalil.examate.presentation.screens.questions.QuestionsScreen
 import com.omarlkhalil.examate.presentation.screens.splash.SplashScreen
-import com.omarlkhalil.examate.presentation.theme.ExamateTheme
 
 
 @Composable

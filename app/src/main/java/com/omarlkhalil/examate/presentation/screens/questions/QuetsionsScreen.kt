@@ -71,11 +71,9 @@ import ir.kaaveh.sdpcompose.sdp
 internal fun QuestionsScreen(
     questionState: QuestionScreenHintState,
     viewModel: SharedViewModel = hiltViewModel()
-) {
+) = ScreenContainer {
     val visibleHintCoordinates = remember { mutableStateOf(viewModel.visibleHintCoordinates.value) }
-    ScreenContainer {
-        QuestionsTabs(questionState, visibleHintCoordinates, viewModel)
-    }
+    QuestionsTabs(questionState, visibleHintCoordinates, viewModel)
 }
 
 @Composable
@@ -154,67 +152,94 @@ internal fun Oral(
     visibleHintCoordinates: MutableState<LayoutCoordinates?>,
     viewModel: SharedViewModel
 ) {
+    val isTutorialActive by viewModel.isTutorialActive.collectAsState()
+
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.spacedBy(10.sdp),
         contentPadding = PaddingValues(10.sdp)
     ) {
         item {
-            if (questionsState.isFilterHintVisible.value) {
-                ToolTipHintItem(
-                    iconRes = R.drawable.ic_filters,
-                    textRes = R.string.home,
-                    isHintVisible = questionsState.isFilterHintVisible,
-                    visibleHintCoordinates = visibleHintCoordinates,
-                    onClick = {
-                        viewModel.updateSelectedIndex(2)
-                    },
-                    customContent = {
-                        Row(
-                            modifier = Modifier
-                                .clip(ExamateTheme.shapes.small)
-                                .width(100.sdp)
-                                .height(40.sdp)
-                                .background(ExamateTheme.color.secondary400),
-                            verticalAlignment = CenterVertically,
-                            horizontalArrangement = Arrangement.Center
-                        ) {
-                            Text(
-                                text = "Filter",
-                                textAlign = TextAlign.Start,
-                                style = ExamateTheme.typography.bold16,
-                                color = ExamateTheme.color.primary600
-                            )
-                            Icon(
-                                painter = painterResource(R.drawable.ic_filters),
-                                contentDescription = "Filter",
-                                tint = ExamateTheme.color.primary400,
-                                modifier = Modifier.size(20.sdp)
+            if (isTutorialActive) {
+                if (questionsState.isFilterHintVisible.value) {
+                    ToolTipHintItem(
+                        iconRes = R.drawable.ic_filters,
+                        textRes = R.string.home,
+                        isHintVisible = questionsState.isFilterHintVisible,
+                        visibleHintCoordinates = visibleHintCoordinates,
+                        onClick = {
+                            viewModel.updateSelectedIndex(2)
+                        },
+                        customContent = {
+                            Row(
+                                modifier = Modifier
+                                    .clip(ExamateTheme.shapes.small)
+                                    .width(100.sdp)
+                                    .height(40.sdp)
+                                    .background(ExamateTheme.color.secondary400),
+                                verticalAlignment = CenterVertically,
+                                horizontalArrangement = Arrangement.Center
+                            ) {
+                                Text(
+                                    text = "Filter",
+                                    textAlign = TextAlign.Start,
+                                    style = ExamateTheme.typography.bold16,
+                                    color = ExamateTheme.color.primary600
+                                )
+                                Icon(
+                                    painter = painterResource(R.drawable.ic_filters),
+                                    contentDescription = "Filter",
+                                    tint = ExamateTheme.color.primary400,
+                                    modifier = Modifier.size(20.sdp)
+                                )
+                            }
+                        },
+                        customHintContent = {
+                            ToolTipItem(
+                                hintText = stringResource(R.string.hint),
+                                isHintVisible = questionsState.isFilterHintVisible,
+                                onCloseClick = {
+                                    viewModel.endTutorial()
+                                },
+                                onNextClick = {
+                                    questionsState.isFilterHintVisible.value =
+                                        !questionsState.isFilterHintVisible.value
+                                    viewModel.updateSelectedIndex(3)
+                                    Handler(Looper.getMainLooper()).post {
+                                        questionsState.isToolsHintVisible.value =
+                                            !questionsState.isToolsHintVisible.value
+                                    }
+                                },
+                                icon = R.drawable.ic_filters
                             )
                         }
-                    },
-                    customHintContent = {
-                        ToolTipItem(
-                            hintText = stringResource(R.string.hint),
-                            isHintVisible = questionsState.isFilterHintVisible,
-                            onCloseClick = {
-                                viewModel.endTutorial()
-                            },
-                            onNextClick = {
-                                questionsState.isFilterHintVisible.value =
-                                    !questionsState.isFilterHintVisible.value
-                                viewModel.updateSelectedIndex(3)
-                                Handler(Looper.getMainLooper()).post{
-                                    questionsState.isToolsHintVisible.value =
-                                        !questionsState.isToolsHintVisible.value
-                                }
-                            },
-                            icon = R.drawable.ic_filters
+                    )
+                } else {
+                    // Default display without the hint
+                    Row(
+                        modifier = Modifier
+                            .clip(ExamateTheme.shapes.small)
+                            .width(100.sdp)
+                            .height(40.sdp)
+                            .background(ExamateTheme.color.secondary400),
+                        verticalAlignment = CenterVertically,
+                        horizontalArrangement = Arrangement.Center
+                    ) {
+                        Text(
+                            text = "Filter",
+                            textAlign = TextAlign.Start,
+                            style = ExamateTheme.typography.bold16,
+                            color = ExamateTheme.color.primary600
+                        )
+                        Icon(
+                            painter = painterResource(R.drawable.ic_filters),
+                            contentDescription = "Filter",
+                            tint = ExamateTheme.color.primary400,
+                            modifier = Modifier.size(20.sdp)
                         )
                     }
-                )
+                }
             } else {
-                // Default display without the hint
                 Row(
                     modifier = Modifier
                         .clip(ExamateTheme.shapes.small)
@@ -240,9 +265,7 @@ internal fun Oral(
             }
         }
         items(questionsList) {
-
             OralQuestionsCard(it)
-
         }
     }
 }
@@ -291,6 +314,8 @@ private fun QuestionsGridList(
     visibleHintCoordinates: MutableState<LayoutCoordinates?> = mutableStateOf(null),
     viewModel: SharedViewModel = hiltViewModel(),
 ) {
+    val isTutorial by viewModel.isTutorialActive.collectAsState()
+
     LazyVerticalGrid(
         modifier = Modifier.fillMaxWidth(),
         columns = GridCells.Fixed(2),
@@ -299,7 +324,7 @@ private fun QuestionsGridList(
         horizontalArrangement = Arrangement.spacedBy(5.sdp)
     ) {
         items(writingsList) {
-            if (writingsList.indexOf(it) == 0) {
+            if (writingsList.indexOf(it) == 0 && isTutorial) {
                 ToolTipHintItem(
                     iconRes = R.drawable.ic_filters,
                     textRes = R.string.home,
