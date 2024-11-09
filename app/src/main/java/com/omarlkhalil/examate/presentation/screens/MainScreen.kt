@@ -45,7 +45,7 @@ import co.yml.tooltip.ui.ToolTipScreen
 import co.yml.tooltip.ui.isTipVisible
 import com.omarlkhalil.examate.R
 import com.omarlkhalil.examate.presentation.components.BaseTopBar
-import com.omarlkhalil.examate.presentation.components.RTBottomNavigationItem
+import com.omarlkhalil.examate.presentation.components.ExamateBottomNavigationItem
 import com.omarlkhalil.examate.presentation.components.ToolTipHintItem
 import com.omarlkhalil.examate.presentation.components.ToolTipItem
 import com.omarlkhalil.examate.presentation.extensions.currentScreenAsState
@@ -276,35 +276,35 @@ private fun RTBottomNavigation(
         containerColor = containerColor,
         tonalElevation = 0.dp,
     ) {
-        RTBottomNavigationItem(
+        ExamateBottomNavigationItem(
             selected = currentSelectedScreen == Roots.Home,
             onClick = { navController.navigateToRootScreen(Roots.Home) },
             icon = R.drawable.ic_nav_home,
             text = R.string.home,
             modifier = Modifier.weight(1f)
         )
-        RTBottomNavigationItem(
+        ExamateBottomNavigationItem(
             selected = currentSelectedScreen == Roots.Connect,
             onClick = { navController.navigateToRootScreen(Roots.Connect) },
             icon = R.drawable.ic_nav_connecters,
             text = R.string.connect,
             modifier = Modifier.weight(1f)
         )
-        RTBottomNavigationItem(
+        ExamateBottomNavigationItem(
             selected = currentSelectedScreen == Roots.Questions,
             onClick = { navController.navigateToRootScreen(Roots.Questions) },
             icon = R.drawable.ic_nav_questions,
             text = R.string.questions,
             modifier = Modifier.weight(1f)
         )
-        RTBottomNavigationItem(
+        ExamateBottomNavigationItem(
             selected = currentSelectedScreen == Roots.Tools,
             onClick = { navController.navigateToRootScreen(Roots.Tools) },
             icon = R.drawable.ic_nav_tools,
             text = R.string.tools,
             modifier = Modifier.weight(1f)
         )
-        RTBottomNavigationItem(
+        ExamateBottomNavigationItem(
             selected = currentSelectedScreen == Roots.Profile,
             onClick = { navController.navigateToRootScreen(Roots.Profile) },
             icon = R.drawable.ic_nav_profile,

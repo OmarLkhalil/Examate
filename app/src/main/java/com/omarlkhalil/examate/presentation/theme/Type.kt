@@ -7,7 +7,7 @@ import androidx.compose.ui.unit.sp
 import com.omarlkhalil.examate.R
 
 
-val examateTypGraphy = ExamateTypGraphy(
+val examateTypography = ExamateTypography(
     bold14 = TextStyle(
         fontFamily = FontFamily(Font(R.font.bold)),
         fontSize = 14.sp
@@ -51,7 +51,7 @@ val examateTypGraphy = ExamateTypGraphy(
 )
 
 
-data class ExamateTypGraphy(
+data class ExamateTypography(
     val bold14: TextStyle,
     val bold16: TextStyle,
     val bold18: TextStyle,

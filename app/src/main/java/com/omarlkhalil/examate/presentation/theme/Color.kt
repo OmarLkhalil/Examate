@@ -3,7 +3,7 @@ package com.omarlkhalil.examate.presentation.theme
 import androidx.compose.ui.graphics.Color
 
 
-data class RTColor(
+data class ExamateColor(
     val primary800: Color,
     val primary600: Color,
     val primary400: Color,
@@ -23,7 +23,7 @@ data class RTColor(
     val blue : Color = Color(0xFF54E9E9)
 )
 
-val rtThemeColors = RTColor(
+val examateThemeColors = ExamateColor(
     primary800 = Color(0xFF0F5252), // Deep teal
     primary600 = Color(0xFF146D6D), // Dark teal
     primary400 = Color(0xFF21B6B6), // Light teal

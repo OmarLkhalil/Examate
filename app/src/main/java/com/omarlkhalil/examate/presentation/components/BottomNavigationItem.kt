@@ -32,7 +32,7 @@ import com.omarlkhalil.examate.R
 
 
 @Composable
-internal fun RTBottomNavigationItem(
+internal fun ExamateBottomNavigationItem(
     selected: Boolean,
     modifier: Modifier = Modifier,
     icon: Int,

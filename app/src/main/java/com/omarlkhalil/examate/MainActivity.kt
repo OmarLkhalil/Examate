@@ -5,7 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import com.omarlkhalil.examate.presentation.screens.MainScreen
-import com.omarlkhalil.examate.presentation.theme.RTScreenTheme
+import com.omarlkhalil.examate.presentation.theme.ExamateTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -14,7 +14,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            RTScreenTheme {
+            ExamateTheme {
                 MainScreen()
             }
         }
